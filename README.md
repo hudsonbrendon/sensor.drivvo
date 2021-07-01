@@ -2,7 +2,7 @@
 
 # Drivvo Sensor Component
 
-![logo.jpg](logo.jpg)
+![logo.jpg](logo.png)
 
 Componente customizado para obter informações presentes no [drivvo.com](https://www.drivvo.com/pt) para o home assistant.
 
