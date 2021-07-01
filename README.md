@@ -10,7 +10,7 @@ Componente customizado para obter informações presentes no [drivvo.com](https:
 
 ## HACS
 
-- Tenha o [HACS] (https://hacs.xyz/) instalado, isso permitirá que você atualize facilmente.
+- Tenha o [HACS](https://hacs.xyz/) instalado, isso permitirá que você atualize facilmente.
 - Adicione https://github.com/hudsonbrendon/sensor.drivvo como um repositório personalizado do Tipo: Integração
 - Clique em Instalar na integração "Drivvo".
 - Reinicie Home-Assistant.
@@ -175,6 +175,10 @@ card:
           icon: mdi:car-hatchback
           unit: km
 ```
+
+Após a configuração, o card acima ficará com essa aparência:
+
+![example 1](example3.png)
 
 # Debugando
 
