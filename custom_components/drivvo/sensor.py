@@ -64,7 +64,9 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
     id_vehicle = config["id_vehicle"]
 
     add_entities(
-        [],
+        [
+            DrivvoModelSensor(hass, email, password, model, id_vehicle, SCAN_INTERVAL),
+        ],
         True,
     )
 
@@ -80,3 +82,31 @@ class DrivvoSensor(Entity):
         self._model = model
         self._id_vehicle = id_vehicle
         self._supplies = []
+
+class DrivvoModelSensor(DrivvoSensor):
+
+    @property
+    def icon(self):
+        """Return the default icon"""
+        return "mdi:car"
+
+    @property
+    def name(self):
+        """Return the name sensor"""
+        return f"{self._model} - Model"
+
+    @property
+    def state(self):
+        """Retorna o número de abastecimentos até então."""
+        return self._model
+
+    @property
+    def device_state_attributes(self):
+        """Atributos."""
+        return {
+            "model": self._model,
+        }
+
+    def update(self):
+        """Atualiza os dados fazendo requisição na API."""
+        self._supplies = get_data(self._email, self._password, self._id_vehicle)
