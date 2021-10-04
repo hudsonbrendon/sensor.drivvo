@@ -67,6 +67,7 @@ def setup_platform(hass, config, add_entities, discovery_info=None):
         [
             DrivvoModelSensor(hass, email, password, model, id_vehicle, SCAN_INTERVAL),
             DrivvoSupplySensor(hass, email, password, model, id_vehicle, SCAN_INTERVAL),
+            DrivvoTotalPaymentSensor(hass, email, password, model, id_vehicle, SCAN_INTERVAL),
         ],
         True,
     )
@@ -145,3 +146,41 @@ class DrivvoSupplySensor(DrivvoSensor):
     def update(self):
         """Atualiza os dados fazendo requisição na API."""
         self._supplies = get_data(self._email, self._password, self._id_vehicle)
+
+
+class DrivvoTotalPaymentSensor(DrivvoSensor):
+
+    @property
+    def icon(self):
+        """Return the default icon"""
+        return "mdi:cash"
+
+    @property
+    def name(self):
+        """Return the name sensor"""
+        return f"{self._model} - Total Payment"
+
+    @property
+    def state(self):
+        """Retorna o número de abastecimentos até então."""
+        return self.total_payment
+
+    @property
+    def total_payment(self):
+        """Soma total de valores pagos em todos os abastecimentos."""
+        total = 0
+        for supply in self._supplies:
+            total += supply.get("valor_total")
+        return total
+
+    @property
+    def device_state_attributes(self):
+        """Atributos."""
+        return {
+            "total_payment": self.total_payment,
+        }
+
+    def update(self):
+        """Atualiza os dados fazendo requisição na API."""
+        self._supplies = get_data(self._email, self._password, self._id_vehicle)
+
