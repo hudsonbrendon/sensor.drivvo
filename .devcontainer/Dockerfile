@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.9
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -7,7 +7,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 RUN python -m pip install --upgrade colorlog black pylint
-RUN python -m pip install --upgrade git+git://github.com/home-assistant/home-assistant.git@dev
+RUN python -m pip install --upgrade homeassistant
 RUN cd && mkdir -p /config/custom_components
 
 

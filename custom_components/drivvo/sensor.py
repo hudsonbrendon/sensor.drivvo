@@ -145,7 +145,7 @@ class DrivvoSensor(Entity):
         return len(self._supplies)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Atributos."""
         return {
             "veiculo": self._model,
