@@ -53,7 +53,7 @@ Para visualizar as informações dos drivvo, segue um exemplo de um card. Lembre
 ```yaml
 type: custom:config-template-card
 entities:
-  - sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
+  - sensor.nissan_march_abastecimento
 card:
   type: entities
   show_header_toggle: 'off'
@@ -68,12 +68,12 @@ card:
           cards:
             - type: picture
               style: |
-                ha-card {
+                ha-card { 
                     --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
                     --ha-card-background: "rgba(0, 0, 0, 0.0)";
                     --ha-card-box-shadow: 'none';
                 }
-              image: /local/images/jeep.png # Substitua pela imagem do seu veículo
+              image: /local/images/nissan.png
             - type: custom:button-card
               layout: icon_name_state2nd
               show_icon: true
@@ -97,8 +97,8 @@ card:
                   - padding: 0px 10px
                   - justify-self: start
                   - color: var(--secondary-text-color)
-              entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-              name: Abastecimentos
+              entity: device_tracker.nissan_march
+              name: Localização
               icon: mdi:car
         - type: custom:bar-card
           show_icon: true
@@ -123,62 +123,63 @@ card:
               from: 30
               to: 41
           style: |
-            ha-card {
+            ha-card { 
                 --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
                 --ha-card-background: "rgba(0, 0, 0, 0.0)";
                 --paper-item-icon-color: 'var(--text-primary-color';
                 --ha-card-box-shadow: 'none';
             }
           entities:
-            - entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
+            - entity: sensor.nissan_march_abastecimento
               attribute: volume_de_combustivel
           name: Volume de combustível
           entity_row: true
-        - type: sensor
-          entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-          attribute: odometro
-          graph: line
-          detail: 2
-          name: Odômetro
-          icon: mdi:car-cruise-control
-          unit: km
-        - type: sensor
-          entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-          attribute: preco_do_combustivel
-          graph: line
-          detail: 2
-          name: Preço atual da gasolina
-          icon: mdi:cash
-          unit: R$
-        - type: sensor
-          entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-          attribute: valor_total_pago
-          graph: line
-          detail: 2
-          name: Valor total pago
-          icon: mdi:cash
-          unit: R$
-        - type: sensor
-          entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-          attribute: soma_total_de_valores_pagos_em_todos_os_abastecimentos
-          graph: line
-          detail: 2
-          name: Total pago em todos os abestecimentos até então
-          icon: mdi:cash
-          unit: R$
-        - type: sensor
-          entity: sensor.jeep_renegade_abastecimento # Substitua pelo seu sensor
-          attribute: km_percorridos_desde_o_ultimo_abastecimento
-          graph: line
-          detail: 2
-          name: Kms percorridos desde o último abastecimento
-          icon: mdi:car-hatchback
-          unit: km
+        - type: custom:apexcharts-card
+          chart_type: line
+          header:
+            title: Nissan March
+            show: true
+            show_states: true
+            colorize_states: true
+          series:
+            - entity: sensor.nissan_march_abastecimento
+              attribute: odometro
+              type: column
+              name: Odômetro
+              unit: km
+            - entity: sensor.nissan_march_abastecimento
+              attribute: preco_do_combustivel
+              type: column
+              name: Preço atual da gasolina
+              unit: R$
+            - entity: sensor.nissan_march_abastecimento
+              attribute: valor_total_pago
+              type: column
+              name: Valor total pago
+              unit: R$
+            - entity: sensor.nissan_march_abastecimento
+              attribute: soma_total_de_valores_pagos_em_todos_os_abastecimentos
+              type: column
+              name: Total pago em todos os abestecimentos até então
+              unit: R$
+            - entity: sensor.nissan_march_abastecimento
+              attribute: km_percorridos_desde_o_ultimo_abastecimento
+              type: column
+              name: Kms percorridos desde o último abastecimento
+              unit: R$
+            - entity: sensor.gasolina_media_natal
+              type: column
+              name: Preço médio da gasolina
+              unit: R$
+            - entity: sensor.nissan_march_abastecimento
+              type: column
+              name: Abastecimentos
+              unit: Abastecimentos
 ```
 
 Após a configuração, o card acima ficará com essa aparência:
 
-![example 1](example3.png)
+![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
 
 # Debugando
 
