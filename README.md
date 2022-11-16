@@ -152,25 +152,29 @@ card:
               type: column
               name: Preço atual da gasolina
               unit: R$
+              float_precision: 2
             - entity: sensor.nissan_march_abastecimento
               attribute: valor_total_pago
               type: column
               name: Valor total pago
               unit: R$
+              float_precision: 2
             - entity: sensor.nissan_march_abastecimento
               attribute: soma_total_de_valores_pagos_em_todos_os_abastecimentos
               type: column
               name: Total pago em todos os abestecimentos até então
               unit: R$
+              float_precision: 2
             - entity: sensor.nissan_march_abastecimento
               attribute: km_percorridos_desde_o_ultimo_abastecimento
               type: column
               name: Kms percorridos desde o último abastecimento
-              unit: R$
+              unit: Km
             - entity: sensor.gasolina_media_natal
               type: column
               name: Preço médio da gasolina
               unit: R$
+              float_precision: 2
             - entity: sensor.nissan_march_abastecimento
               type: column
               name: Abastecimentos
