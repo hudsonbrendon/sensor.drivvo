@@ -122,14 +122,14 @@ class DrivvoSensor(Entity):
         """Soma total de valores pagos em todos os abastecimentos."""
         total = 0
         for supply in self._supplies:
-            total += supply.get("valor_total")
+            total += supply["valor_total"]
         return total
 
     @property
     def km_travel(self):
         """Km percorridos desde o ultimo abastecimento."""
         km = 0
-        odometers = [supply.get("odometro") for supply in self._supplies]
+        odometers = [supply["odometro"] for supply in self._supplies]
         if len(odometers) > 1:
             km = odometers[0] - odometers[1]
         return km
@@ -137,7 +137,7 @@ class DrivvoSensor(Entity):
     @property
     def cheapest_gasoline_until_today(self):
         """Gasolina mais barata até hoje."""
-        return min([supply.get("preco") for supply in self._supplies])
+        return min([supply["preco"] for supply in self._supplies])
 
     @property
     def total_amount_of_supplies(self):
@@ -149,14 +149,13 @@ class DrivvoSensor(Entity):
         """Atributos."""
         return {
             "veiculo": self._model,
-            "odometro": self.supply.get("odometro"),
-            "posto": self.supply.get("posto_combustivel").get("nome"),
+            "odometro": self.supply["odometro"],
+            "posto": self.supply["posto_combustivel"]["nome"],
             "tipo_de_combustivel": self.supply.get("combustivel"),
             "motivo_do_abastecimento": self.supply.get("tipo_motivo"),
             "data_do_abastecimento": self.supply.get("data"),
-            "volume_de_combustivel": self.supply.get("tanques")[0].get("volume"),
-            "valor_total_pago": self.supply.get("valor_total"),
-            "preco_do_combustivel": self.supply.get("preco"),
+            "valor_total_pago": self.supply["valor_total"],
+            "preco_do_combustivel": self.supply["preco"],
             "soma_total_de_abastecimentos": self.total_amount_of_supplies,
             "soma_total_de_valores_pagos_em_todos_os_abastecimentos": self.total_payment,
             "encheu_o_tanque": "Sim" if self.supply.get("tanque_cheio") else "Não",
@@ -167,3 +166,6 @@ class DrivvoSensor(Entity):
     def update(self):
         """Atualiza os dados fazendo requisição na API."""
         self._supplies = get_data(self._email, self._password, self._id_vehicle)
+        import pdb
+
+        pdb.set_trace()
