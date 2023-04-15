@@ -166,6 +166,3 @@ class DrivvoSensor(Entity):
     def update(self):
         """Atualiza os dados fazendo requisição na API."""
         self._supplies = get_data(self._email, self._password, self._id_vehicle)
-        import pdb
-
-        pdb.set_trace()
