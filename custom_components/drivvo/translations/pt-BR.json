@@ -1,0 +1,15 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Entre com as informações da sua conta e do veículo:",
+        "data": {
+          "email": "E-mail",
+          "password": "Senha",
+          "model": "Modelo",
+          "id_vehicle": "ID do Veículo"
+        }
+      }
+    }
+  }
+}

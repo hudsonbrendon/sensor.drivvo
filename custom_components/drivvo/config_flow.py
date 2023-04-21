@@ -6,8 +6,8 @@ from .const import DOMAIN, CONF_EMAIL, CONF_MODEL, CONF_PASSWORD, CONF_ID_VEHICL
 DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_EMAIL): str,
-        vol.Required(CONF_MODEL): str,
         vol.Required(CONF_PASSWORD): str,
+        vol.Required(CONF_MODEL): str,
         vol.Required(CONF_ID_VEHICLE): str,
     }
 )
