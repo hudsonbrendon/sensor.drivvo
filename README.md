@@ -21,15 +21,21 @@ Componente customizado para obter informações presentes no [drivvo.com](https:
 - Configure.
 - Reinicie o Home-Assistant.
 
-# Configuração
+## Configuration
 
-```yaml
-- platform: drivvo
-  email: your-email
-  password: your-passowrd
-  model: model-vehicle ## Informe o nome do modelo do carro, por exemplo: Jeep Renegade
-  id_vehicle: id-vehicle
-```
+Adding Drivvo to your Home Assistant instance can be done via the user interface, by using this My button:
+
+[![image](https://user-images.githubusercontent.com/31328123/189550000-6095719b-ca38-4860-b817-926b19de1b32.png)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
+
+### Manual configuration steps
+If the above My button doesn’t work, you can also perform the following steps manually:
+
+* Browse to your Home Assistant instance.
+* In the sidebar click on  Settings.
+* From the configuration menu select: Devices & Services.
+* In the bottom right, click on the  Add Integration button.
+* From the list, search and select “Drivvo”.
+* Follow the instruction on screen to complete the set up.
 
 ## Obtendo o id_vehicle
 
