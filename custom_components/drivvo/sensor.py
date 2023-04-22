@@ -3,6 +3,7 @@ import hashlib
 import logging
 
 from homeassistant import core, config_entries
+from homeassistant.exceptions import ConfigEntryAuthFailed
 import homeassistant.helpers.config_validation as cv
 import requests
 import voluptuous as vol
@@ -58,7 +59,7 @@ def get_data(email, password, id_vehicle):
         else:
             _LOGGER.error("Cannot perform the request")
     else:
-        _LOGGER.error("Cannot authentication")
+        _LOGGER.error("Cannot authentication: %s", response)
     return supplies
 
 

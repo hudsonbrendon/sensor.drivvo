@@ -9,10 +9,21 @@
           "model": "Model",
           "id_vehicle": "Vehicle ID"
         }
+      },
+      "reauth_confirm": {
+        "user": {
+          "data": {
+            "password": "Password"
+          }
+        }
       }
     },
+    "error": {
+      "auth_error": "Invalid authentication"
+    },
     "abort": {
-      "already_configured": "This vehicle is already set up for this account."
+      "already_configured": "This vehicle is already set up for this account.",
+      "reauth_successful": "Reauthentication successful."
     }
   },
   "issues": {
@@ -23,6 +34,21 @@
     "import_already_configured": {
       "title": "Vehicle configuration {vehicle} in account {email} already exists",
       "description": "Vehicle configuration {vehicle} in account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "password": "Password"
+        }
+      }
+    },
+    "abort":{
+      "changes_successful": "Changes successfully saved."
+    },
+    "error": {
+      "auth_error": "Invalid authentication"
     }
   }
 }

@@ -9,10 +9,21 @@
           "model": "Modelo",
           "id_vehicle": "ID do Veículo"
         }
+      },
+      "reauth_confirm": {
+        "user": {
+          "data": {
+            "password": "Senha"
+          }
+        }
       }
     },
+    "error": {
+      "auth_error": "Autenticação inválida"
+    },
     "abort": {
-      "already_configured": "Este veículo já está configurado para esta conta."
+      "already_configured": "Este veículo já está configurado para esta conta.",
+      "reauth_successful": "Reautenticação realizada com sucesso."
     }
   },
   "issues": {
@@ -23,6 +34,20 @@
     "import_already_configured": {
       "title": "A configuração do veículo {vehicle} na conta {email} já existe",
       "description": "A configuração do veículo {vehicle} na conta {email} já existe e por isso não foi importada.\n\nVocê pode remover a configuração do seu arquivo `configuration.yaml`."
+    }
+  },
+  "options": {
+    "step": {
+      "user": {
+        "data": {
+          "password": "Senha",
+          "model": "Modelo"
+        }
+      }
+    },
+    "error": {
+      "auth_error": "Autenticação inválida",
+      "changes_successful": "Alterações salvas com sucesso."
     }
   }
 }
