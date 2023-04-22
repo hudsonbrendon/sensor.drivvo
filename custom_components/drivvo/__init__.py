@@ -2,19 +2,6 @@ from .const import DOMAIN
 from homeassistant import config_entries, core
 
 
-async def async_setup(hass: core.HomeAssistant, config: dict) -> bool:
-    """Set up the Ingresso component."""
-    hass.data.setdefault(DOMAIN, {})
-
-    hass.async_create_task(
-        hass.config_entries.flow.async_init(
-            DOMAIN, context={"source": config_entries.SOURCE_USER}
-        )
-    )
-
-    return True
-
-
 async def async_setup_entry(
     hass: core.HomeAssistant, entry: config_entries.ConfigEntry
 ):
@@ -26,3 +13,12 @@ async def async_setup_entry(
     )
 
     return True
+
+
+async def async_unload_entry(
+    hass: core.HomeAssistant, entry: config_entries.ConfigEntry
+) -> bool:
+    """Unload a config entry."""
+    if unload_ok := await hass.config_entries.async_unload_platforms(entry, "sensor"):
+        hass.data[DOMAIN].pop(entry.entry_id)
+    return unload_ok

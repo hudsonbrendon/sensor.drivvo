@@ -1,0 +1,28 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Enter your account and vehicle information:",
+        "data": {
+          "email": "E-mail",
+          "password": "Password",
+          "model": "Model",
+          "id_vehicle": "Vehicle ID"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "This vehicle is already set up for this account."
+    }
+  },
+  "issues": {
+    "yaml_deprecated": {
+      "title": "Configuration of the Drivvo in YAML is deprecated",
+      "description": "Configuration of Drivvo integration via YAML is deprecated.\n\nYour configuration has been imported into the UI and can be removed from the `configuration.yaml` file and restart Home Assistant."
+    },
+    "import_already_configured": {
+      "title": "Vehicle configuration {vehicle} in account {email} already exists",
+      "description": "Vehicle configuration {vehicle} in account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
+    }
+  }
+}

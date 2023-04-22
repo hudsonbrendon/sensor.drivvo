@@ -1,3 +1,4 @@
+from typing import Any
 import hashlib
 import logging
 
@@ -10,6 +11,7 @@ from homeassistant.const import (
     STATE_UNKNOWN,
 )
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from .const import (
     DOMAIN,
@@ -82,6 +84,38 @@ async def async_setup_entry(
         ],
         update_before_add=True,
     )
+
+
+async def async_setup_platform(
+    hass: core.HomeAssistant,
+    config: dict[str, Any],
+    add_entities,
+    discovery_info=False,
+) -> bool:
+    # import to config flow
+    _LOGGER.warning(
+        "Configuration of Drivvo integration via YAML is deprecated."
+        "Your configuration has been imported into the UI and can be"
+        "removed from the configuration.yaml file."
+    )
+    async_create_issue(
+        hass,
+        DOMAIN,
+        "yaml_deprecated",
+        is_fixable=False,
+        severity=IssueSeverity.WARNING,
+        translation_key="yaml_deprecated",
+    )
+
+    hass.async_create_task(
+        hass.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data=config,
+        )
+    )
+
+    return True
 
 
 class DrivvoSensor(Entity):

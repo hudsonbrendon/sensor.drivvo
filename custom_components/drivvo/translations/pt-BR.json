@@ -1,0 +1,28 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Entre com as informações da sua conta e do veículo:",
+        "data": {
+          "email": "E-mail",
+          "password": "Senha",
+          "model": "Modelo",
+          "id_vehicle": "ID do Veículo"
+        }
+      }
+    },
+    "abort": {
+      "already_configured": "Este veículo já está configurado para esta conta."
+    }
+  },
+  "issues": {
+    "yaml_deprecated": {
+      "title": "A configuração YAML para o Drivvo está depreciada",
+      "description": "A configuração YAML para o Drivvo está depreciada.\n\nSua configuração foi importada para a IU e pode ser removida do arquivo `configuration.yaml`."
+    },
+    "import_already_configured": {
+      "title": "A configuração do veículo {vehicle} na conta {email} já existe",
+      "description": "A configuração do veículo {vehicle} na conta {email} já existe e por isso não foi importada.\n\nVocê pode remover a configuração do seu arquivo `configuration.yaml`."
+    }
+  }
+}
