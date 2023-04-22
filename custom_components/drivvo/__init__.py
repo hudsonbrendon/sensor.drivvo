@@ -6,8 +6,6 @@ from homeassistant.exceptions import ConfigEntryAuthFailed
 from .const import CONF_EMAIL, CONF_PASSWORD, DOMAIN, LOGIN_BASE_URL
 from homeassistant import config_entries, core
 
-_LOGGER = logging.getLogger(__name__)
-
 PLATFORMS = [Platform.SENSOR]
 
 

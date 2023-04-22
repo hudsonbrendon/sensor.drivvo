@@ -1,6 +1,4 @@
 from typing import Any, Mapping
-import hashlib
-import requests
 import voluptuous as vol
 from config.custom_components.drivvo import test_auth
 from homeassistant import config_entries
@@ -14,23 +12,24 @@ from .const import (
     CONF_MODEL,
     CONF_PASSWORD,
     CONF_ID_VEHICLE,
-    LOGIN_BASE_URL,
 )
 
 
-DATA_SCHEMA = vol.Schema(
+DATA_SCHEMA: vol.Schema = vol.Schema(
     {
         vol.Required(CONF_EMAIL): str,
         vol.Required(CONF_PASSWORD): str,
-        vol.Required(CONF_MODEL): str,
         vol.Required(CONF_ID_VEHICLE): str,
+        vol.Required(CONF_MODEL): str,
     }
 )
-AUTH_SCHEMA = vol.Schema(
+AUTH_SCHEMA: vol.Schema = vol.Schema(
     {
+        vol.Required(CONF_EMAIL): str,
         vol.Required(CONF_PASSWORD): str,
     }
 )
+OPTIONS_SCHEMA: vol.Schema = AUTH_SCHEMA
 
 
 class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
@@ -48,13 +47,13 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
         if user_input is not None:
             if await test_auth(
                 hass=self.hass,
-                user=self.config_entry.data.get(CONF_EMAIL),
+                user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
             ):
                 self.hass.config_entries.async_update_entry(
                     self.config_entry,
                     data={
-                        CONF_EMAIL: self.config_entry.data.get(CONF_EMAIL),
+                        CONF_EMAIL: user_input.get(CONF_EMAIL),
                         CONF_MODEL: self.config_entry.data.get(CONF_MODEL),
                         CONF_ID_VEHICLE: self.config_entry.data.get(CONF_ID_VEHICLE),
                         CONF_PASSWORD: user_input.get(CONF_PASSWORD),
@@ -70,8 +69,8 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(
             step_id="init",
             data_schema=self.add_suggested_values_to_schema(
-                AUTH_SCHEMA,
-                self.config_entry.data or user_input,
+                OPTIONS_SCHEMA,
+                user_input or self.config_entry.data,
             ),
             errors=errors,
         )
@@ -158,13 +157,13 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             if await test_auth(
                 hass=self.hass,
-                user=self._reauth_entry.data.get(CONF_EMAIL),
+                user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
             ):
                 self.hass.config_entries.async_update_entry(
                     self._reauth_entry,
                     data={
-                        CONF_EMAIL: self._reauth_entry.data.get(CONF_EMAIL),
+                        CONF_EMAIL: user_input.get(CONF_EMAIL),
                         CONF_MODEL: self._reauth_entry.data.get(CONF_MODEL),
                         CONF_ID_VEHICLE: self._reauth_entry.data.get(CONF_ID_VEHICLE),
                         CONF_PASSWORD: user_input.get(CONF_PASSWORD),

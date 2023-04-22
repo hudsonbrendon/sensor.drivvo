@@ -3,7 +3,6 @@ import hashlib
 import logging
 
 from homeassistant import core, config_entries
-from homeassistant.exceptions import ConfigEntryAuthFailed
 import homeassistant.helpers.config_validation as cv
 import requests
 import voluptuous as vol

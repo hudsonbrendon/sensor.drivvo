@@ -11,10 +11,9 @@
         }
       },
       "reauth_confirm": {
-        "user": {
-          "data": {
-            "password": "Password"
-          }
+        "data": {
+          "email": "E-mail",
+          "password": "Password"
         }
       }
     },
@@ -40,6 +39,7 @@
     "step": {
       "init": {
         "data": {
+          "email": "E-mail",
           "password": "Password"
         }
       }

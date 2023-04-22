@@ -11,10 +11,9 @@
         }
       },
       "reauth_confirm": {
-        "user": {
-          "data": {
-            "password": "Senha"
-          }
+        "data": {
+          "email": "E-mail",
+          "password": "Senha"
         }
       }
     },
@@ -38,10 +37,10 @@
   },
   "options": {
     "step": {
-      "user": {
+      "init": {
         "data": {
-          "password": "Senha",
-          "model": "Modelo"
+          "email": "E-mail",
+          "password": "Senha"
         }
       }
     },
