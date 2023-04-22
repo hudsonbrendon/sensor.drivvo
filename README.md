@@ -21,21 +21,21 @@ Componente customizado para obter informações presentes no [drivvo.com](https:
 - Configure.
 - Reinicie o Home-Assistant.
 
-## Configuration
+## Configuração
 
-Adding Drivvo to your Home Assistant instance can be done via the user interface, by using this My button:
+Adicionar o Drivvo à sua instância do Home Assistant pode ser feito por meio da interface do usuário, usando este botão:
 
 [![image](https://user-images.githubusercontent.com/31328123/189550000-6095719b-ca38-4860-b817-926b19de1b32.png)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
 
-### Manual configuration steps
-If the above My button doesn’t work, you can also perform the following steps manually:
+### Configuração Manual
+Se o botão Meu acima não funcionar, você também pode executar as seguintes etapas manualmente:
 
-* Browse to your Home Assistant instance.
-* In the sidebar click on  Settings.
-* From the configuration menu select: Devices & Services.
-* In the bottom right, click on the  Add Integration button.
-* From the list, search and select “Drivvo”.
-* Follow the instruction on screen to complete the set up.
+* Navegue até sua instância do Home Assistant.
+* Na barra lateral, clique em Configurações.
+* No menu de configuração, selecione: Dispositivos & serviços.
+* No canto inferior direito, clique no botão Adicionar integração.
+* Na lista, pesquise e selecione “Drivvo”.
+* Siga as instruções na tela para concluir a configuração.
 
 ## Obtendo o id_vehicle
 
