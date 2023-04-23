@@ -178,7 +178,7 @@ After setup, the card above will look like this:
 
 ![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
 
-# Debugando
+# Debugging
 
 ```yaml
 logger:
