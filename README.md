@@ -17,7 +17,7 @@ Custom integration for the Home Assistant to obtain information present in [driv
 
 ## Manual
 
-- Copy the custom_components/drivvo directory to your <config dir>/custom_components directory.
+- Copy the custom_components/drivvo directory to your `<config dir>/custom_components` directory.
 - Restart the Home Assistant.
 
 ## Configuration
