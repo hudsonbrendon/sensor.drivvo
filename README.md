@@ -6,8 +6,6 @@
 
 Custom integration for the Home Assistant to obtain information present in [drivvo.com](https://www.drivvo.com/).
 
-# Install and Configure
-
 ## Install
 
 ### Installation via HACS
@@ -39,7 +37,7 @@ If the button above doesn't work, you can also perform the following steps manua
 * In the list, search and select `Drivvo`.
 * Follow the on-screen instructions to complete the setup.
 
-# Make a card
+## Make a card
 
 To view drivvo information, follow an example of a card. Remember to replace the entities present on the card with your entities.
 
@@ -179,7 +177,7 @@ After setup, the card above will look like this:
 
 ![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
 
-# Debugging
+## Debugging
 
 ```yaml
 logger:
