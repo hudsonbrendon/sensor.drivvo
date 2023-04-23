@@ -8,6 +8,7 @@
   "dependencies": [],
   "documentation": "https://github.com/hudsonbrendon/sensor.drivvo#readme",
   "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/hudsonbrendon/sensor.drivvo/issues",
   "requirements": [],
   "version": "1.0.1"
 }
