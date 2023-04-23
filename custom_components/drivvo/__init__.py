@@ -141,8 +141,17 @@ async def get_data_vehicle(hass, user, password, id_vehicle, info):
             return None
 
         response = await hass.async_add_executor_job(get)
-        _LOGGER.debug("API Response Data Vehicle: %s", response.json())
+
+        def sort_by_key(list):
+            return list["data"]
 
         if response.ok:
-            return response.json()
+            data = response.json()
+            if info == "abastecimento":
+                data = sorted(data, key=sort_by_key, reverse=True)
+
+            _LOGGER.debug("API Response Data Vehicle - %s: %s", info, data)
+            return data
+
+    _LOGGER.debug("API Response Data Vehicle - %s: %s", info, response)
     return False
