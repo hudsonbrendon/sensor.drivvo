@@ -38,7 +38,7 @@ If the My button above doesn't work, you can also perform the following steps ma
 * In the list, search and select “Drivvo”.
 * Follow the on-screen instructions to complete the setup.
 
-# Construindo um card
+# Make a card
 
 To view drivvo information, follow an example of a card. Remember to replace the entities present on the card with your entities.
 
