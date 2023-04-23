@@ -8,6 +8,7 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from . import auth, get_vehicles
@@ -48,6 +49,21 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
                 password=user_input.get(CONF_PASSWORD),
             ):
                 vehicles = user_input.get(CONF_VEHICLES, [])
+
+                for vehicle in self.config_entry.data.get(CONF_VEHICLES):
+                    if vehicle not in vehicles:
+                        device_identifiers = {(DOMAIN, vehicle)}
+                        dev_reg = dr.async_get(self.hass)
+                        device = dev_reg.async_get_or_create(
+                            config_entry_id=self.config_entry.entry_id,
+                            identifiers=device_identifiers,
+                        )
+
+                        dev_reg.async_update_device(
+                            device_id=device.id,
+                            remove_config_entry_id=self.config_entry.entry_id,
+                        )
+                        _LOGGER.debug("Device %s (%s) removed", device.name, device.id)
 
                 self.hass.config_entries.async_update_entry(
                     self.config_entry,

@@ -122,6 +122,7 @@ class DrivvoSensor(Entity):
             default_manufacturer="Drivvo",
             name=name,
             default_model=f"{marca}/{model}",
+            configuration_url="https://web.drivvo.com/",
         )
 
     @property
