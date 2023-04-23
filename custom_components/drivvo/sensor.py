@@ -10,6 +10,7 @@ import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
+from . import get_data_vehicle
 from .const import (
     CONF_EMAIL,
     CONF_ID_VEHICLE,
@@ -20,7 +21,6 @@ from .const import (
     ICON,
     SCAN_INTERVAL,
 )
-from .drivvo import get_data_vehicle
 
 _LOGGER = logging.getLogger(__name__)
 

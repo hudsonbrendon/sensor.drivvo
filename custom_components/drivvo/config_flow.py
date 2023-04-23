@@ -10,8 +10,13 @@ from homeassistant.data_entry_flow import FlowResult
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
-from .const import CONF_EMAIL, CONF_ID_VEHICLE, CONF_PASSWORD, CONF_VEHICLES, DOMAIN
-from .drivvo import auth, get_vehicles
+from . import auth, get_vehicles
+from .const import (
+    CONF_EMAIL,
+    CONF_PASSWORD,
+    CONF_VEHICLES,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -70,7 +75,7 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
             if vehicle["ativo"]:
                 resource_vehicle[
                     str(vehicle["id_veiculo"])
-                ] = f"{vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                ] = f"{vehicle['nome']} - {vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
 
         old_vehicles = []
 
@@ -201,7 +206,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             if vehicle["ativo"]:
                 resource_vehicle[
                     str(vehicle["id_veiculo"])
-                ] = f"{vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                ] = f"{vehicle['nome']} - {vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
 
         if len(resource_vehicle) == 0:
             return self.async_create_entry(
