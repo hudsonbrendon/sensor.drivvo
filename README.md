@@ -1,6 +1,6 @@
 ![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg) [![BuyMeCoffee][buymecoffeebedge]][buymecoffee] [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 
-# Drivvo Custom Integration
+# Drivvo Custom Integration Home Assistant
 
 ![logo.jpg](logo.png)
 
@@ -17,7 +17,7 @@ Custom integration for the Home Assistant to obtain information present in [driv
 
 ### Manual installation
 
-- Copy `drivvo`  folder from [latest release](https://github.com/hudsonbrendon/sensor.drivvo/releases/latest) to your `<config dir>/custom_components` directory.
+- Copy `drivvo`  folder from [latest release](https://github.com/hudsonbrendon/sensor.drivvo/releases/latest) to your `<config dir>/custom_components/` directory.
 - Restart the Home Assistant.
 
 ## Configuration
@@ -179,6 +179,7 @@ After setup, the card above will look like this:
 
 ## Debugging
 
+To enable debug for Drivvo integration, add following to your `configuration.yaml`:
 ```yaml
 logger:
   default: info
