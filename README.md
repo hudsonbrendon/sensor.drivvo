@@ -4,42 +4,43 @@
 
 ![logo.jpg](logo.png)
 
-Componente customizado para obter informações presentes no [drivvo.com](https://www.drivvo.com/pt) para o home assistant.
+Custom component to obtain information present in [drivvo.com](https://www.drivvo.com/) for the home assistant.
 
-# Instalação
+# Install
 
 ## HACS
 
-- Tenha o [HACS](https://hacs.xyz/) instalado, isso permitirá que você atualize facilmente.
-- Adicione https://github.com/hudsonbrendon/sensor.drivvo como um repositório personalizado do Tipo: Integração
-- Clique em Instalar na integração "Drivvo".
-- Reinicie Home-Assistant.
+- Have [HACS](https://hacs.xyz/) installed, this will allow you to update easily.
+- Add https://github.com/hudsonbrendon/sensor.drivvo as a custom repository of Type: Integration
+- Click Install on the "Drivvo" integration.
+- Restart Home-Assistant.
 
 ## Manual
 
-- Copie o diretório custom_components/drivvo para o seu diretório <config dir>/custom_components.
+- Copy the custom_components/drivvo directory to your <config dir>/custom_components directory.
 - Configure.
-- Reinicie o Home-Assistant.
+- Restart the Home Assistant.
 
-## Configuração
+## Configuration
 
-Adicionar o Drivvo à sua instância do Home Assistant pode ser feito por meio da interface do usuário, usando este botão:
+Adding Drivvo to your Home Assistant instance can be done via the UI using this button:
 
 [![image](https://user-images.githubusercontent.com/31328123/189550000-6095719b-ca38-4860-b817-926b19de1b32.png)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
 
-### Configuração Manual
-Se o botão Meu acima não funcionar, você também pode executar as seguintes etapas manualmente:
+### Manual Configuration
 
-* Navegue até sua instância do Home Assistant.
-* Na barra lateral, clique em Configurações.
-* No menu de configuração, selecione: Dispositivos & serviços.
-* No canto inferior direito, clique no botão Adicionar integração.
-* Na lista, pesquise e selecione “Drivvo”.
-* Siga as instruções na tela para concluir a configuração.
+If the My button above doesn't work, you can also perform the following steps manually:
+
+* Navigate to your Home Assistant instance.
+* In the sidebar, click Settings.
+* From the Setup menu, select: Devices & Services.
+* In the lower right corner, click the Add integration button.
+* In the list, search and select “Drivvo”.
+* Follow the on-screen instructions to complete the setup.
 
 # Construindo um card
 
-Para visualizar as informações dos drivvo, segue um exemplo de um card. Lembre-se de substituir as entidades presentes no card pelas suas entidades.
+To view drivvo information, follow an example of a card. Remember to replace the entities present on the card with your entities.
 
 
 ```yaml
@@ -60,7 +61,7 @@ card:
           cards:
             - type: picture
               style: |
-                ha-card { 
+                ha-card {
                     --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
                     --ha-card-background: "rgba(0, 0, 0, 0.0)";
                     --ha-card-box-shadow: 'none';
@@ -115,7 +116,7 @@ card:
               from: 30
               to: 41
           style: |
-            ha-card { 
+            ha-card {
                 --paper-card-background-color: 'rgba(0, 0, 0, 0.0)';
                 --ha-card-background: "rgba(0, 0, 0, 0.0)";
                 --paper-item-icon-color: 'var(--text-primary-color';
@@ -173,7 +174,7 @@ card:
               unit: Abastecimentos
 ```
 
-Após a configuração, o card acima ficará com essa aparência:
+After setup, the card above will look like this:
 
 ![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
 
