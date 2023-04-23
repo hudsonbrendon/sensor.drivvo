@@ -1,10 +1,10 @@
-![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg) [![BuyMeCoffee][buymecoffeebedge]][buymecoffee] [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg)] [![BuyMeCoffee][buymecoffeebedge]][buymecoffee] [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 
-# Drivvo Sensor Component
+# Drivvo Custom Integration
 
 ![logo.jpg](logo.png)
 
-Custom component to obtain information present in [drivvo.com](https://www.drivvo.com/) for the home assistant.
+Custom integration for the Home Assistant to obtain information present in [drivvo.com](https://www.drivvo.com/).
 
 # Install
 
@@ -12,13 +12,12 @@ Custom component to obtain information present in [drivvo.com](https://www.drivv
 
 - Have [HACS](https://hacs.xyz/) installed, this will allow you to update easily.
 - Add https://github.com/hudsonbrendon/sensor.drivvo as a custom repository of Type: Integration
-- Click Install on the "Drivvo" integration.
-- Restart Home-Assistant.
+- Click Install on the `Drivvo` integration.
+- Restart the Home Assistant.
 
 ## Manual
 
 - Copy the custom_components/drivvo directory to your <config dir>/custom_components directory.
-- Configure.
 - Restart the Home Assistant.
 
 ## Configuration
@@ -29,13 +28,13 @@ Adding Drivvo to your Home Assistant instance can be done via the UI using this 
 
 ### Manual Configuration
 
-If the My button above doesn't work, you can also perform the following steps manually:
+If the button above doesn't work, you can also perform the following steps manually:
 
 * Navigate to your Home Assistant instance.
 * In the sidebar, click Settings.
 * From the Setup menu, select: Devices & Services.
 * In the lower right corner, click the Add integration button.
-* In the list, search and select “Drivvo”.
+* In the list, search and select `Drivvo`.
 * Follow the on-screen instructions to complete the setup.
 
 # Make a card
