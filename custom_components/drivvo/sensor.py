@@ -1,29 +1,26 @@
-from typing import Any
 import logging
-from config.custom_components.drivvo import auth, get_data_vehicle, get_vehicles
+from typing import Any
 
-from homeassistant import core, config_entries
-import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
+
+from homeassistant import config_entries, core
 from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import (
-    STATE_UNKNOWN,
-)
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
+from homeassistant.const import STATE_UNKNOWN
+import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from .const import (
-    CONF_VEHICLES,
-    DOMAIN,
     CONF_EMAIL,
+    CONF_ID_VEHICLE,
     CONF_MODEL,
     CONF_PASSWORD,
-    CONF_ID_VEHICLE,
-    SCAN_INTERVAL,
+    CONF_VEHICLES,
+    DOMAIN,
     ICON,
+    SCAN_INTERVAL,
 )
-
-from homeassistant.helpers.entity import Entity
+from .drivvo import get_data_vehicle
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -104,7 +101,7 @@ async def async_setup_platform(
 
 class DrivvoSensor(Entity):
     def __init__(self, hass, email, model, id_vehicle, password, interval):
-        """Inizialize sensor"""
+        """Inizialize sensor."""
         self._state = STATE_UNKNOWN
         self._hass = hass
         self._interval = interval
@@ -117,12 +114,12 @@ class DrivvoSensor(Entity):
 
     @property
     def name(self):
-        """Return the name sensor"""
+        """Return the name sensor."""
         return self._name
 
     @property
     def icon(self):
-        """Return the default icon"""
+        """Return the default icon."""
         return ICON
 
     @property
@@ -159,7 +156,7 @@ class DrivvoSensor(Entity):
 
     @property
     def total_amount_of_supplies(self):
-        """Número total de abastetimentos"""
+        """Número total de abastetimentos."""
         return len(self._supplies)
 
     @property

@@ -4,9 +4,7 @@
   "version": "0.0.5",
   "documentation": "https://github.com/hudsonbrendon/sensor.drivvo",
   "dependencies": [],
-  "codeowners": [
-    "@hudsonbrendon"
-  ],
+  "codeowners": ["@hudsonbrendon"],
   "requirements": [],
   "config_flow": true,
   "iot_class": "cloud_polling"

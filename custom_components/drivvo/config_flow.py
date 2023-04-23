@@ -1,20 +1,17 @@
+from collections.abc import Mapping
 import logging
-from typing import Any, Mapping
+from typing import Any
+
 import voluptuous as vol
-from config.custom_components.drivvo import get_vehicles, auth
+
 from homeassistant import config_entries
-import homeassistant.helpers.config_validation as cv
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
+import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
-from .const import (
-    CONF_VEHICLES,
-    DOMAIN,
-    CONF_EMAIL,
-    CONF_PASSWORD,
-    CONF_ID_VEHICLE,
-)
+from .const import CONF_EMAIL, CONF_ID_VEHICLE, CONF_PASSWORD, CONF_VEHICLES, DOMAIN
+from .drivvo import auth, get_vehicles
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,10 +41,7 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
                 user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
             ):
-                if CONF_VEHICLES in user_input:
-                    vehicles = user_input[CONF_VEHICLES]
-                else:
-                    vehicles = []
+                vehicles = user_input.get(CONF_VEHICLES, [])
 
                 self.hass.config_entries.async_update_entry(
                     self.config_entry,
@@ -112,6 +106,8 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
 
 class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Drivvo config flow."""
+
+    VERSION = 2
 
     def __init__(self) -> None:
         """Initialize Drivvo config flow."""

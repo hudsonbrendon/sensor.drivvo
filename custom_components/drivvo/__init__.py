@@ -1,10 +1,21 @@
 import hashlib
 import logging
+
 import requests
+
+from homeassistant import config_entries, core
 from homeassistant.const import Platform
 from homeassistant.exceptions import ConfigEntryAuthFailed
-from .const import BASE_URL, CONF_EMAIL, CONF_PASSWORD, DOMAIN, LOGIN_BASE_URL
-from homeassistant import config_entries, core
+
+from .const import (
+    BASE_URL,
+    CONF_EMAIL,
+    CONF_ID_VEHICLE,
+    CONF_PASSWORD,
+    CONF_VEHICLES,
+    DOMAIN,
+    LOGIN_BASE_URL,
+)
 
 PLATFORMS = [Platform.SENSOR]
 
@@ -41,6 +52,29 @@ async def async_unload_entry(
     return unload_ok
 
 
+async def async_migrate_entry(
+    hass: core.HomeAssistant, config_entry: config_entries.ConfigEntry
+):
+    """Migrate old entry."""
+    _LOGGER.debug("Migrating from version %s", config_entry.version)
+
+    if config_entry.version == 1:
+        vehicle = []
+        vehicle.append(config_entry.data.get(CONF_ID_VEHICLE))
+        data_new = {
+            CONF_EMAIL: config_entry.data.get(CONF_EMAIL),
+            CONF_PASSWORD: config_entry.data.get(CONF_PASSWORD),
+            CONF_VEHICLES: vehicle,
+        }
+
+        config_entry.version = 2
+        hass.config_entries.async_update_entry(config_entry, data=data_new)
+
+    _LOGGER.info("Migration to version %s successful", config_entry.version)
+
+    return True
+
+
 async def auth(
     hass,
     user,
@@ -52,10 +86,10 @@ async def auth(
     def login():
         return requests.post(
             LOGIN_BASE_URL,
-            data=dict(
-                email=user,
-                senha=password,
-            ),
+            data={
+                "email": user,
+                "senha": password,
+            },
         )
 
     response = await hass.async_add_executor_job(login)
@@ -87,7 +121,7 @@ async def get_vehicles(
 
 
 async def get_data_vehicle(hass, user, password, id_vehicle, info):
-    """Get The request from the api"""
+    """Get The request from the api."""
 
     def get():
         return requests.get(url, headers={"x-token": token})

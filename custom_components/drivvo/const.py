@@ -1,6 +1,5 @@
 from datetime import timedelta
 
-
 ICON = "mdi:gas-station"
 SCAN_INTERVAL = timedelta(minutes=60)
 ATTRIBUTION = "Data provided by drivvo api"
