@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "description": "Entre com as informações da sua conta e do veículo:",
+        "description": "Entre com as informações da sua conta:",
         "data": {
           "email": "E-mail",
           "password": "Senha"
