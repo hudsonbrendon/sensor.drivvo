@@ -7,7 +7,8 @@ from homeassistant import config_entries, core
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import STATE_UNKNOWN
 import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.entity import Entity
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.entity import DeviceInfo, Entity
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from . import get_data_vehicle
@@ -58,6 +59,8 @@ async def async_setup_entry(
                         hass,
                         config[CONF_EMAIL],
                         vehicle_data["nome"],
+                        vehicle_data["marca"],
+                        vehicle_data["modelo"],
                         vehicle,
                         config[CONF_PASSWORD],
                         SCAN_INTERVAL,
@@ -100,17 +103,26 @@ async def async_setup_platform(
 
 
 class DrivvoSensor(Entity):
-    def __init__(self, hass, email, model, id_vehicle, password, interval):
+    def __init__(self, hass, email, name, marca, model, id_vehicle, password, interval):
         """Inizialize sensor."""
+        self._attr_has_entity_name = True
         self._state = STATE_UNKNOWN
         self._hass = hass
         self._interval = interval
         self._email = email
         self._password = password
-        self._model = model
+        self._model = f"{marca}/{model}"
         self._id_vehicle = id_vehicle
-        self._name = model
+        self._name = "Abastecimento"
         self._supplies = []
+        self._attr_unique_id = f"{id_vehicle}_abastecimento"
+        self._attr_device_info = DeviceInfo(
+            entry_type=dr.DeviceEntryType.SERVICE,
+            identifiers={(DOMAIN, id_vehicle)},
+            default_manufacturer="Drivvo",
+            name=name,
+            default_model=f"{marca}/{model}",
+        )
 
     @property
     def name(self):

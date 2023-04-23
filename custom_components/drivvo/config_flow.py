@@ -13,6 +13,7 @@ from homeassistant.helpers.issue_registry import IssueSeverity, async_create_iss
 from . import auth, get_vehicles
 from .const import (
     CONF_EMAIL,
+    CONF_ID_VEHICLE,
     CONF_PASSWORD,
     CONF_VEHICLES,
     DOMAIN,
