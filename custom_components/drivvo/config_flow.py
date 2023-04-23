@@ -140,8 +140,8 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_import(self, import_config: dict[str, Any]) -> FlowResult:
         """Import existing configuration."""
 
-        if f"{DOMAIN}_{import_config.get(CONF_EMAIL)}" in [
-            f"{entry.domain}_{entry.data.get(CONF_EMAIL)}"
+        if (f"{DOMAIN}_{import_config.get(CONF_EMAIL)}").lower() in [
+            (f"{entry.domain}_{entry.data.get(CONF_EMAIL)}").lower()
             for entry in self._async_current_entries()
         ]:
             async_create_issue(
@@ -172,8 +172,8 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input is not None:
-            if f"{DOMAIN}_{user_input.get(CONF_EMAIL)}" in [
-                f"{entry.domain}_{entry.data.get(CONF_EMAIL)}"
+            if (f"{DOMAIN}_{user_input.get(CONF_EMAIL)}").lower() in [
+                (f"{entry.domain}_{entry.data.get(CONF_EMAIL)}").lower()
                 for entry in self._async_current_entries()
             ]:
                 return self.async_abort(reason="already_configured")
