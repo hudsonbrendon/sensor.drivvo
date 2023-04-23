@@ -1,5 +1,6 @@
 {
   "domain": "drivvo",
+  "domains": [],
   "name": "Drivvo",
   "codeowners": [
     "@hudsonbrendon"
