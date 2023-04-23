@@ -1,10 +1,9 @@
 from typing import Any
-import hashlib
 import logging
+from config.custom_components.drivvo import auth, get_data_vehicle, get_vehicles
 
 from homeassistant import core, config_entries
 import homeassistant.helpers.config_validation as cv
-import requests
 import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import (
@@ -14,14 +13,13 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from .const import (
+    CONF_VEHICLES,
     DOMAIN,
     CONF_EMAIL,
     CONF_MODEL,
     CONF_PASSWORD,
     CONF_ID_VEHICLE,
     SCAN_INTERVAL,
-    BASE_URL,
-    LOGIN_BASE_URL,
     ICON,
 )
 
@@ -39,29 +37,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_data(email, password, id_vehicle):
-    """Get The request from the api"""
-    password = hashlib.md5(password.encode("utf-8")).hexdigest()
-    url = BASE_URL.format(id_vehicle, "abastecimento")
-    supplies = []
-
-    response = requests.post(
-        LOGIN_BASE_URL,
-        data=dict(email=email, senha=password),
-    )
-
-    if response.ok:
-        x_token = response.json().get("token")
-        response = requests.get(url, headers={"x-token": x_token})
-        if response.ok:
-            supplies = response.json()
-        else:
-            _LOGGER.error("Cannot perform the request")
-    else:
-        _LOGGER.error("Cannot authentication: %s", response)
-    return supplies
-
-
 async def async_setup_entry(
     hass: core.HomeAssistant,
     config_entry: config_entries.ConfigEntry,
@@ -70,20 +45,29 @@ async def async_setup_entry(
     """Setup sensor platform."""
     config = hass.data[DOMAIN][config_entry.entry_id]
 
-    session = async_get_clientsession(hass)
-    async_add_entities(
-        [
-            DrivvoSensor(
+    for vehicle in config[CONF_VEHICLES]:
+        if (
+            vehicle_data := await get_data_vehicle(
                 hass,
-                config[CONF_EMAIL],
-                config[CONF_MODEL],
-                config[CONF_ID_VEHICLE],
-                config[CONF_PASSWORD],
-                SCAN_INTERVAL,
+                user=config[CONF_EMAIL],
+                password=config[CONF_PASSWORD],
+                id_vehicle=vehicle,
+                info="base",
             )
-        ],
-        update_before_add=True,
-    )
+        ) is not None:
+            async_add_entities(
+                [
+                    DrivvoSensor(
+                        hass,
+                        config[CONF_EMAIL],
+                        vehicle_data["nome"],
+                        vehicle,
+                        config[CONF_PASSWORD],
+                        SCAN_INTERVAL,
+                    )
+                ],
+                update_before_add=True,
+            )
 
 
 async def async_setup_platform(
@@ -197,6 +181,12 @@ class DrivvoSensor(Entity):
             "gasolina_mais_barata_ate_entao": self.cheapest_gasoline_until_today,
         }
 
-    def update(self):
+    async def async_update(self):
         """Atualiza os dados fazendo requisição na API."""
-        self._supplies = get_data(self._email, self._password, self._id_vehicle)
+        self._supplies = await get_data_vehicle(
+            hass=self.hass,
+            user=self._email,
+            password=self._password,
+            id_vehicle=self._id_vehicle,
+            info="abastecimento",
+        )

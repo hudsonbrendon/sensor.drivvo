@@ -1,35 +1,29 @@
+import logging
 from typing import Any, Mapping
 import voluptuous as vol
-from config.custom_components.drivvo import test_auth
+from config.custom_components.drivvo import get_vehicles, auth
 from homeassistant import config_entries
+import homeassistant.helpers.config_validation as cv
 from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
 
 from .const import (
+    CONF_VEHICLES,
     DOMAIN,
     CONF_EMAIL,
-    CONF_MODEL,
     CONF_PASSWORD,
     CONF_ID_VEHICLE,
 )
 
+_LOGGER = logging.getLogger(__name__)
 
 DATA_SCHEMA: vol.Schema = vol.Schema(
     {
         vol.Required(CONF_EMAIL): str,
         vol.Required(CONF_PASSWORD): str,
-        vol.Required(CONF_ID_VEHICLE): str,
-        vol.Required(CONF_MODEL): str,
     }
 )
-AUTH_SCHEMA: vol.Schema = vol.Schema(
-    {
-        vol.Required(CONF_EMAIL): str,
-        vol.Required(CONF_PASSWORD): str,
-    }
-)
-OPTIONS_SCHEMA: vol.Schema = AUTH_SCHEMA
 
 
 class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
@@ -45,18 +39,22 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
         errors = {}
 
         if user_input is not None:
-            if await test_auth(
+            if await auth(
                 hass=self.hass,
                 user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
             ):
+                if CONF_VEHICLES in user_input:
+                    vehicles = user_input[CONF_VEHICLES]
+                else:
+                    vehicles = []
+
                 self.hass.config_entries.async_update_entry(
                     self.config_entry,
                     data={
                         CONF_EMAIL: user_input.get(CONF_EMAIL),
-                        CONF_MODEL: self.config_entry.data.get(CONF_MODEL),
-                        CONF_ID_VEHICLE: self.config_entry.data.get(CONF_ID_VEHICLE),
                         CONF_PASSWORD: user_input.get(CONF_PASSWORD),
+                        CONF_VEHICLES: vehicles,
                     },
                 )
 
@@ -66,10 +64,46 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
 
             errors[CONF_PASSWORD] = "auth_error"
 
+        token = await auth(
+            hass=self.hass,
+            user=self.config_entry.data.get(CONF_EMAIL),
+            password=self.config_entry.data.get(CONF_PASSWORD),
+            token=True,
+        )
+        vehicles = await get_vehicles(self.hass, token)
+        resource_vehicle = {}
+        for vehicle in vehicles:
+            if vehicle["ativo"]:
+                resource_vehicle[
+                    str(vehicle["id_veiculo"])
+                ] = f"{vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+
+        old_vehicles = []
+
+        for vehicle in self.config_entry.data[CONF_VEHICLES]:
+            old_vehicles.append(vehicle)
+
+        vehicles = {
+            **dict.fromkeys(old_vehicles),
+            **resource_vehicle,
+        }
+        if len(vehicles) == 0:
+            SCHEMA_VEHICLES = DATA_SCHEMA.extend(
+                {
+                    vol.Optional("no_vehicles"): "",
+                }
+            )
+        else:
+            SCHEMA_VEHICLES = DATA_SCHEMA.extend(
+                {
+                    vol.Required(CONF_VEHICLES): cv.multi_select(vehicles),
+                }
+            )
+
         return self.async_show_form(
             step_id="init",
             data_schema=self.add_suggested_values_to_schema(
-                OPTIONS_SCHEMA,
+                SCHEMA_VEHICLES,
                 user_input or self.config_entry.data,
             ),
             errors=errors,
@@ -79,56 +113,63 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
 class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Drivvo config flow."""
 
+    def __init__(self) -> None:
+        """Initialize Drivvo config flow."""
+        self.token: str
+        self.user: str
+        self.password: str
+
     async def async_step_import(self, import_config: dict[str, Any]) -> FlowResult:
         """Import existing configuration."""
 
-        if f"{import_config.get(CONF_EMAIL)}_{import_config.get(CONF_ID_VEHICLE)}" in [
-            f"{entry.data.get(CONF_EMAIL)}_{entry.data.get(CONF_ID_VEHICLE)}"
+        if f"{DOMAIN}_{import_config.get(CONF_EMAIL)}" in [
+            f"{entry.domain}_{entry.data.get(CONF_EMAIL)}"
             for entry in self._async_current_entries()
         ]:
             async_create_issue(
                 self.hass,
                 DOMAIN,
-                f"{import_config.get(CONF_EMAIL)}_{import_config.get(CONF_ID_VEHICLE)}_import_already_configured",
+                f"{import_config.get(CONF_EMAIL)}_import_already_configured",
                 is_fixable=False,
                 severity=IssueSeverity.WARNING,
                 translation_key="import_already_configured",
                 translation_placeholders={
                     "email": str(import_config.get(CONF_EMAIL)),
-                    "vehicle": str(import_config.get(CONF_ID_VEHICLE)),
                 },
             )
             return self.async_abort(reason="import_failed")
 
+        vehicles = []
+        vehicles.append(import_config.get(CONF_ID_VEHICLE))
         return self.async_create_entry(
-            title=f"{import_config[CONF_MODEL].capitalize()}",
-            data=import_config,
+            title=import_config[CONF_EMAIL],
+            data={
+                CONF_EMAIL: import_config.get(CONF_EMAIL),
+                CONF_PASSWORD: import_config.get(CONF_PASSWORD),
+                CONF_VEHICLES: vehicles,
+            },
         )
 
     async def async_step_user(self, user_input=None):
         errors = {}
 
         if user_input is not None:
-            if f"{user_input.get(CONF_EMAIL)}_{user_input.get(CONF_ID_VEHICLE)}" in [
-                f"{entry.data.get(CONF_EMAIL)}_{entry.data.get(CONF_ID_VEHICLE)}"
+            if f"{DOMAIN}_{user_input.get(CONF_EMAIL)}" in [
+                f"{entry.domain}_{entry.data.get(CONF_EMAIL)}"
                 for entry in self._async_current_entries()
             ]:
                 return self.async_abort(reason="already_configured")
 
-            if await test_auth(
+            if token := await auth(
                 hass=self.hass,
                 user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
+                token=True,
             ):
-                return self.async_create_entry(
-                    title=f"{user_input[CONF_MODEL].capitalize()}",
-                    data={
-                        CONF_EMAIL: user_input[CONF_EMAIL],
-                        CONF_MODEL: user_input[CONF_MODEL],
-                        CONF_ID_VEHICLE: user_input[CONF_ID_VEHICLE],
-                        CONF_PASSWORD: user_input[CONF_PASSWORD],
-                    },
-                )
+                self.user = user_input.get(CONF_EMAIL)
+                self.password = user_input.get(CONF_PASSWORD)
+                self.token = token
+                return await self.async_step_vehicle()
 
             errors[CONF_PASSWORD] = "auth_error"
 
@@ -136,6 +177,54 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             step_id="user",
             data_schema=self.add_suggested_values_to_schema(
                 DATA_SCHEMA,
+                user_input,
+            ),
+            errors=errors,
+        )
+
+    async def async_step_vehicle(
+        self,
+        user_input=None,
+    ):
+        errors = {}
+
+        if user_input is not None:
+            return self.async_create_entry(
+                title=self.user,
+                data={
+                    CONF_EMAIL: self.user,
+                    CONF_PASSWORD: self.password,
+                    CONF_VEHICLES: user_input[CONF_VEHICLES],
+                },
+            )
+
+        vehicles = await get_vehicles(self.hass, self.token)
+        resource_vehicle = {}
+        _LOGGER.debug("Veiculos: %s", vehicles)
+        for vehicle in vehicles:
+            if vehicle["ativo"]:
+                resource_vehicle[
+                    str(vehicle["id_veiculo"])
+                ] = f"{vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+
+        if len(resource_vehicle) == 0:
+            return self.async_create_entry(
+                title=self.user,
+                data={
+                    CONF_EMAIL: self.user,
+                    CONF_PASSWORD: self.password,
+                    CONF_VEHICLES: [],
+                },
+            )
+
+        return self.async_show_form(
+            step_id="vehicle",
+            data_schema=self.add_suggested_values_to_schema(
+                vol.Schema(
+                    {
+                        vol.Required(CONF_VEHICLES): cv.multi_select(resource_vehicle),
+                    }
+                ),
                 user_input,
             ),
             errors=errors,
@@ -155,7 +244,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
         assert self._reauth_entry
         if user_input is not None:
-            if await test_auth(
+            if await auth(
                 hass=self.hass,
                 user=user_input.get(CONF_EMAIL),
                 password=user_input.get(CONF_PASSWORD),
@@ -164,9 +253,8 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     self._reauth_entry,
                     data={
                         CONF_EMAIL: user_input.get(CONF_EMAIL),
-                        CONF_MODEL: self._reauth_entry.data.get(CONF_MODEL),
-                        CONF_ID_VEHICLE: self._reauth_entry.data.get(CONF_ID_VEHICLE),
                         CONF_PASSWORD: user_input.get(CONF_PASSWORD),
+                        CONF_VEHICLES: self._reauth_entry.data.get(CONF_VEHICLES),
                     },
                 )
 
@@ -179,7 +267,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="reauth_confirm",
             data_schema=self.add_suggested_values_to_schema(
-                AUTH_SCHEMA, user_input or self._reauth_entry.data
+                DATA_SCHEMA, user_input or self._reauth_entry.data
             ),
             errors=errors,
         )

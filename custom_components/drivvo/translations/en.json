@@ -5,9 +5,13 @@
         "description": "Enter your account and vehicle information:",
         "data": {
           "email": "E-mail",
-          "password": "Password",
-          "model": "Model",
-          "id_vehicle": "Vehicle ID"
+          "password": "Password"
+        }
+      },
+      "vehicle": {
+        "description": "Select the vehicles you want to add to the integration:",
+        "data": {
+          "vehicles": "Vehicles"
         }
       },
       "reauth_confirm": {
@@ -21,7 +25,7 @@
       "auth_error": "Invalid authentication"
     },
     "abort": {
-      "already_configured": "This vehicle is already set up for this account.",
+      "already_configured": "This account is already set up.",
       "reauth_successful": "Reauthentication successful."
     }
   },
@@ -31,8 +35,8 @@
       "description": "Configuration of Drivvo integration via YAML is deprecated.\n\nYour configuration has been imported into the UI and can be removed from the `configuration.yaml` file and restart Home Assistant."
     },
     "import_already_configured": {
-      "title": "Vehicle configuration {vehicle} in account {email} already exists",
-      "description": "Vehicle configuration {vehicle} in account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
+      "title": "Account {email} already exists",
+      "description": "Account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
     }
   },
   "options": {
@@ -40,7 +44,9 @@
       "init": {
         "data": {
           "email": "E-mail",
-          "password": "Password"
+          "password": "Password",
+          "vehicles": "Vehicles",
+          "no_vehicles": "There are no active vehicles on this account."
         }
       }
     },

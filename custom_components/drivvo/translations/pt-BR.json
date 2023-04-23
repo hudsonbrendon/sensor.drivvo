@@ -5,9 +5,13 @@
         "description": "Entre com as informações da sua conta e do veículo:",
         "data": {
           "email": "E-mail",
-          "password": "Senha",
-          "model": "Modelo",
-          "id_vehicle": "ID do Veículo"
+          "password": "Senha"
+        }
+      },
+      "vehicle": {
+        "description": "Selecione os veículos que deseja adicionar na integraçao:",
+        "data": {
+          "vehicles": "Veículos"
         }
       },
       "reauth_confirm": {
@@ -21,7 +25,7 @@
       "auth_error": "Autenticação inválida"
     },
     "abort": {
-      "already_configured": "Este veículo já está configurado para esta conta.",
+      "already_configured": "Esta conta já está configurada.",
       "reauth_successful": "Reautenticação realizada com sucesso."
     }
   },
@@ -31,8 +35,8 @@
       "description": "A configuração YAML para o Drivvo está depreciada.\n\nSua configuração foi importada para a IU e pode ser removida do arquivo `configuration.yaml`."
     },
     "import_already_configured": {
-      "title": "A configuração do veículo {vehicle} na conta {email} já existe",
-      "description": "A configuração do veículo {vehicle} na conta {email} já existe e por isso não foi importada.\n\nVocê pode remover a configuração do seu arquivo `configuration.yaml`."
+      "title": "A configuração da conta {email} já existe",
+      "description": "A configuração da conta {email} já existe e por isso não foi importada.\n\nVocê pode remover a configuração do seu arquivo `configuration.yaml`."
     }
   },
   "options": {
@@ -40,13 +44,17 @@
       "init": {
         "data": {
           "email": "E-mail",
-          "password": "Senha"
+          "password": "Senha",
+          "vehicles": "Veículos",
+          "no_vehicles": "Não há veículos ativos para esta conta."
         }
       }
     },
-    "error": {
-      "auth_error": "Autenticação inválida",
+    "abort":{
       "changes_successful": "Alterações salvas com sucesso."
+    },
+    "error": {
+      "auth_error": "Autenticação inválida"
     }
   }
 }
