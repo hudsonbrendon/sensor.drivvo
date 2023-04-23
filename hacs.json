@@ -2,7 +2,4 @@
   "name": "Drivvo",
   "country": "BR",
   "render_readme": true,
-  "domains": [
-    "sensor"
-  ]
 }
