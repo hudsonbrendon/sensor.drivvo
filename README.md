@@ -2,7 +2,7 @@
 
 # Drivvo Custom Integration Home Assistant
 
-![logo.jpg](logo.png)
+![topo.png](topo.png)
 
 Custom integration for the Home Assistant to obtain information present in [drivvo.com](https://www.drivvo.com/).
 
