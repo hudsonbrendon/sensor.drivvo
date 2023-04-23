@@ -37,20 +37,6 @@ Se o botão Meu acima não funcionar, você também pode executar as seguintes e
 * Na lista, pesquise e selecione “Drivvo”.
 * Siga as instruções na tela para concluir a configuração.
 
-## Obtendo o id_vehicle
-
-Acesse a página de [login](https://web.drivvo.com/auth/login), abra o console do navegador com o atalho *(CTRL + SHIFT + J)*, selecione a aba **Rede** e selecione a opção **XHR** como mostrado na imagem abaixo:
-
-![example 1](example1.png)
-
-Efetue o login com seu usuário, no console aparecerá uma lista de requisições feitas, pesquise pelas que tem o prefixo **web** como mostrado na imagem abaixo:
-
-![example 1](example2.png)
-
-Selecione uma requisição e na aba **Headers** dessa requisição, aparecerá a url acessada, que seguirá esse padrão: https://api.drivvo.com/veiculo/12345/abastecimento/web
-
-O id do seu veículo será o número que estará no lugar do 12345, utilize ele na sua configuração do drivvo, informando ele no parâmetro **id_vehicle**.
-
 # Construindo um card
 
 Para visualizar as informações dos drivvo, segue um exemplo de um card. Lembre-se de substituir as entidades presentes no card pelas suas entidades.
