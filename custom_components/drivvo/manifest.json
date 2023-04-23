@@ -9,5 +9,5 @@
   "documentation": "https://github.com/hudsonbrendon/sensor.drivvo",
   "iot_class": "cloud_polling",
   "requirements": [],
-  "version": "0.0.6"
+  "version": "1.0.0"
 }
