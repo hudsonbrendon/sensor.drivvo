@@ -1,9 +1,7 @@
 {
   "domain": "drivvo",
   "name": "Drivvo",
-  "codeowners": [
-    "@hudsonbrendon"
-  ],
+  "codeowners": ["@hudsonbrendon"],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/hudsonbrendon/sensor.drivvo",

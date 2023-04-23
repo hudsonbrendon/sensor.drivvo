@@ -1,29 +1,27 @@
-import hashlib
 import logging
+from typing import Any
 
-from homeassistant import core, config_entries
-import homeassistant.helpers.config_validation as cv
-import requests
 import voluptuous as vol
-from homeassistant.components.sensor import PLATFORM_SCHEMA
-from homeassistant.const import (
-    STATE_UNKNOWN,
-)
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
+from homeassistant import config_entries, core
+from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.const import STATE_UNKNOWN
+import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.entity import DeviceInfo, Entity
+from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
+
+from . import get_data_vehicle
 from .const import (
-    DOMAIN,
     CONF_EMAIL,
+    CONF_ID_VEHICLE,
     CONF_MODEL,
     CONF_PASSWORD,
-    CONF_ID_VEHICLE,
-    SCAN_INTERVAL,
-    BASE_URL,
-    LOGIN_BASE_URL,
+    CONF_VEHICLES,
+    DOMAIN,
     ICON,
+    SCAN_INTERVAL,
 )
-
-from homeassistant.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -37,29 +35,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-def get_data(email, password, id_vehicle):
-    """Get The request from the api"""
-    password = hashlib.md5(password.encode("utf-8")).hexdigest()
-    url = BASE_URL.format(id_vehicle, "abastecimento")
-    supplies = []
-
-    response = requests.post(
-        LOGIN_BASE_URL,
-        data=dict(email=email, senha=password),
-    )
-
-    if response.ok:
-        x_token = response.json().get("token")
-        response = requests.get(url, headers={"x-token": x_token})
-        if response.ok:
-            supplies = response.json()
-        else:
-            _LOGGER.error("Cannot perform the request")
-    else:
-        _LOGGER.error("Cannot authentication")
-    return supplies
-
-
 async def async_setup_entry(
     hass: core.HomeAssistant,
     config_entry: config_entries.ConfigEntry,
@@ -68,43 +43,96 @@ async def async_setup_entry(
     """Setup sensor platform."""
     config = hass.data[DOMAIN][config_entry.entry_id]
 
-    session = async_get_clientsession(hass)
-    async_add_entities(
-        [
-            DrivvoSensor(
+    for vehicle in config[CONF_VEHICLES]:
+        if (
+            vehicle_data := await get_data_vehicle(
                 hass,
-                config[CONF_EMAIL],
-                config[CONF_MODEL],
-                config[CONF_ID_VEHICLE],
-                config[CONF_PASSWORD],
-                SCAN_INTERVAL,
+                user=config[CONF_EMAIL],
+                password=config[CONF_PASSWORD],
+                id_vehicle=vehicle,
+                info="base",
             )
-        ],
-        update_before_add=True,
+        ) is not None:
+            async_add_entities(
+                [
+                    DrivvoSensor(
+                        hass,
+                        config[CONF_EMAIL],
+                        vehicle_data["nome"],
+                        vehicle_data["marca"],
+                        vehicle_data["modelo"],
+                        vehicle,
+                        config[CONF_PASSWORD],
+                        SCAN_INTERVAL,
+                    )
+                ],
+                update_before_add=True,
+            )
+
+
+async def async_setup_platform(
+    hass: core.HomeAssistant,
+    config: dict[str, Any],
+    add_entities,
+    discovery_info=False,
+) -> bool:
+    # import to config flow
+    _LOGGER.warning(
+        "Configuration of Drivvo integration via YAML is deprecated."
+        "Your configuration has been imported into the UI and can be"
+        "removed from the configuration.yaml file."
     )
+    async_create_issue(
+        hass,
+        DOMAIN,
+        "yaml_deprecated",
+        is_fixable=False,
+        severity=IssueSeverity.WARNING,
+        translation_key="yaml_deprecated",
+    )
+
+    hass.async_create_task(
+        hass.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data=config,
+        )
+    )
+
+    return True
 
 
 class DrivvoSensor(Entity):
-    def __init__(self, hass, email, model, id_vehicle, password, interval):
-        """Inizialize sensor"""
+    def __init__(self, hass, email, name, marca, model, id_vehicle, password, interval):
+        """Inizialize sensor."""
+        self._attr_has_entity_name = True
         self._state = STATE_UNKNOWN
         self._hass = hass
         self._interval = interval
         self._email = email
         self._password = password
-        self._model = model
+        self._model = f"{marca}/{model}"
         self._id_vehicle = id_vehicle
-        self._name = model
+        self._name = "Abastecimento"
         self._supplies = []
+        self._attr_unique_id = f"{id_vehicle}_abastecimento"
+        self._attr_device_info = DeviceInfo(
+            entry_type=dr.DeviceEntryType.SERVICE,
+            identifiers={(DOMAIN, id_vehicle)},
+            default_manufacturer="Drivvo",
+            name=name,
+            default_model=f"{marca}/{model}",
+            configuration_url="https://web.drivvo.com/",
+        )
 
     @property
     def name(self):
-        """Return the name sensor"""
+        """Return the name sensor."""
         return self._name
 
     @property
     def icon(self):
-        """Return the default icon"""
+        """Return the default icon."""
         return ICON
 
     @property
@@ -141,7 +169,7 @@ class DrivvoSensor(Entity):
 
     @property
     def total_amount_of_supplies(self):
-        """Número total de abastetimentos"""
+        """Número total de abastetimentos."""
         return len(self._supplies)
 
     @property
@@ -163,6 +191,12 @@ class DrivvoSensor(Entity):
             "gasolina_mais_barata_ate_entao": self.cheapest_gasoline_until_today,
         }
 
-    def update(self):
+    async def async_update(self):
         """Atualiza os dados fazendo requisição na API."""
-        self._supplies = get_data(self._email, self._password, self._id_vehicle)
+        self._supplies = await get_data_vehicle(
+            hass=self.hass,
+            user=self._email,
+            password=self._password,
+            id_vehicle=self._id_vehicle,
+            info="abastecimento",
+        )

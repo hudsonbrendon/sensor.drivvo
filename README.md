@@ -21,29 +21,21 @@ Componente customizado para obter informações presentes no [drivvo.com](https:
 - Configure.
 - Reinicie o Home-Assistant.
 
-# Configuração
+## Configuração
 
-```yaml
-- platform: drivvo
-  email: your-email
-  password: your-passowrd
-  model: model-vehicle ## Informe o nome do modelo do carro, por exemplo: Jeep Renegade
-  id_vehicle: id-vehicle
-```
+Adicionar o Drivvo à sua instância do Home Assistant pode ser feito por meio da interface do usuário, usando este botão:
 
-## Obtendo o id_vehicle
+[![image](https://user-images.githubusercontent.com/31328123/189550000-6095719b-ca38-4860-b817-926b19de1b32.png)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
 
-Acesse a página de [login](https://web.drivvo.com/auth/login), abra o console do navegador com o atalho *(CTRL + SHIFT + J)*, selecione a aba **Rede** e selecione a opção **XHR** como mostrado na imagem abaixo:
+### Configuração Manual
+Se o botão Meu acima não funcionar, você também pode executar as seguintes etapas manualmente:
 
-![example 1](example1.png)
-
-Efetue o login com seu usuário, no console aparecerá uma lista de requisições feitas, pesquise pelas que tem o prefixo **web** como mostrado na imagem abaixo:
-
-![example 1](example2.png)
-
-Selecione uma requisição e na aba **Headers** dessa requisição, aparecerá a url acessada, que seguirá esse padrão: https://api.drivvo.com/veiculo/12345/abastecimento/web
-
-O id do seu veículo será o número que estará no lugar do 12345, utilize ele na sua configuração do drivvo, informando ele no parâmetro **id_vehicle**.
+* Navegue até sua instância do Home Assistant.
+* Na barra lateral, clique em Configurações.
+* No menu de configuração, selecione: Dispositivos & serviços.
+* No canto inferior direito, clique no botão Adicionar integração.
+* Na lista, pesquise e selecione “Drivvo”.
+* Siga as instruções na tela para concluir a configuração.
 
 # Construindo um card
 
