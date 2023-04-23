@@ -1,6 +1,5 @@
 {
-  "domain": "drivvo",
-  "domains": [],
+  "domain": "sensor_drivvo",
   "name": "Drivvo",
   "codeowners": [
     "@hudsonbrendon"
