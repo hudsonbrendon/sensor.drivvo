@@ -90,9 +90,15 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
         resource_vehicle = {}
         for vehicle in vehicles:
             if vehicle["ativo"]:
-                resource_vehicle[
-                    str(vehicle["id_veiculo"])
-                ] = f"{vehicle['nome']} - {vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                vehicle_name = ""
+                if vehicle["nome"] is not None and vehicle["nome"] != "":
+                    vehicle_name += f"{vehicle['nome']} - "
+                if vehicle["placa"] is not None and vehicle["placa"] != "":
+                    vehicle_name += f"{vehicle['placa']} - "
+                vehicle_name += (
+                    f"{vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                )
+                resource_vehicle[str(vehicle["id_veiculo"])] = vehicle_name
 
         old_vehicles = []
 
@@ -221,9 +227,15 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         _LOGGER.debug("Veiculos: %s", vehicles)
         for vehicle in vehicles:
             if vehicle["ativo"]:
-                resource_vehicle[
-                    str(vehicle["id_veiculo"])
-                ] = f"{vehicle['nome']} - {vehicle['placa']} {vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                vehicle_name = ""
+                if vehicle["nome"] is not None and vehicle["nome"] != "":
+                    vehicle_name += f"{vehicle['nome']} - "
+                if vehicle["placa"] is not None and vehicle["placa"] != "":
+                    vehicle_name += f"{vehicle['placa']} - "
+                vehicle_name += (
+                    f"{vehicle['marca']}/{vehicle['modelo']} ({vehicle['id_veiculo']})"
+                )
+                resource_vehicle[str(vehicle["id_veiculo"])] = vehicle_name
 
         if len(resource_vehicle) == 0:
             return self.async_create_entry(
