@@ -12,6 +12,8 @@ Custom integration for the Home Assistant to obtain information present in [driv
 
 Have HACS installed, this will allow you to update easily.
 
+Adding Drivvo to HACS can be using this button:
+
 [![image](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hudsonbrendon&repository=sensor.drivvo&category=integration)
 
 If the button above doesn't work, add `https://github.com/hudsonbrendon/sensor.drivvo` as a custom repository of type Integration in HACS.
