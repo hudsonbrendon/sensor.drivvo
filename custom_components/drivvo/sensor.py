@@ -53,12 +53,19 @@ async def async_setup_entry(
                 info="base",
             )
         ) is not None:
+            if vehicle_data["nome"] is not None and vehicle_data["nome"] != "":
+                vehicle_name = vehicle_data["nome"]
+            elif vehicle_data["placa"] is not None and vehicle_data["placa"] != "":
+                vehicle_name = vehicle_data["placa"]
+            else:
+                vehicle_name = f"{vehicle_data['marca']}/{vehicle_data['modelo']}"
+
             async_add_entities(
                 [
                     DrivvoSensor(
                         hass,
                         config[CONF_EMAIL],
-                        vehicle_data["nome"],
+                        vehicle_name,
                         vehicle_data["marca"],
                         vehicle_data["modelo"],
                         vehicle,
