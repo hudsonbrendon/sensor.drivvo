@@ -1,44 +1,59 @@
 ![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg) [![BuyMeCoffee][buymecoffeebedge]][buymecoffee] [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
 
-# Drivvo Sensor Component
+# Drivvo Custom Integration Home Assistant
 
-![logo.jpg](logo.png)
+![topo.png](topo.png)
 
-Custom component to obtain information present in [drivvo.com](https://www.drivvo.com/) for the home assistant.
+Custom integration for the Home Assistant to obtain information present in [drivvo.com](https://www.drivvo.com/).
 
-# Install
+## Install
 
-## HACS
+### Installation via HACS
 
-- Have [HACS](https://hacs.xyz/) installed, this will allow you to update easily.
-- Add https://github.com/hudsonbrendon/sensor.drivvo as a custom repository of Type: Integration
-- Click Install on the "Drivvo" integration.
-- Restart Home-Assistant.
+Have HACS installed, this will allow you to update easily.
 
-## Manual
+Adding Drivvo to HACS can be using this button:
 
-- Copy the custom_components/drivvo directory to your <config dir>/custom_components directory.
-- Configure.
+[![image](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hudsonbrendon&repository=sensor.drivvo&category=integration)
+
+If the button above doesn't work, add `https://github.com/hudsonbrendon/sensor.drivvo` as a custom repository of type Integration in HACS.
+
+- Click Install on the `Drivvo` integration.
+- Restart the Home Assistant.
+
+### Manual installation
+
+- Copy `drivvo`  folder from [latest release](https://github.com/hudsonbrendon/sensor.drivvo/releases/latest) to your `<config dir>/custom_components/` directory.
 - Restart the Home Assistant.
 
 ## Configuration
 
 Adding Drivvo to your Home Assistant instance can be done via the UI using this button:
 
-[![image](https://user-images.githubusercontent.com/31328123/189550000-6095719b-ca38-4860-b817-926b19de1b32.png)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
+[![image](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=drivvo)
 
 ### Manual Configuration
 
-If the My button above doesn't work, you can also perform the following steps manually:
+If the button above doesn't work, you can also perform the following steps manually:
 
 * Navigate to your Home Assistant instance.
 * In the sidebar, click Settings.
 * From the Setup menu, select: Devices & Services.
 * In the lower right corner, click the Add integration button.
-* In the list, search and select “Drivvo”.
+* In the list, search and select `Drivvo`.
 * Follow the on-screen instructions to complete the setup.
 
-# Make a card
+## Debugging
+
+To enable debug for Drivvo integration, add following to your `configuration.yaml`:
+```yaml
+logger:
+  default: info
+  logs:
+    custom_components.drivvo: debug
+```
+
+## Make a card
 
 To view drivvo information, follow an example of a card. Remember to replace the entities present on the card with your entities.
 
@@ -178,14 +193,8 @@ After setup, the card above will look like this:
 
 ![image](https://user-images.githubusercontent.com/5201888/201997053-d025824d-11e2-4e53-8dcf-e011d1b267f2.png)
 
-# Debugging
 
-```yaml
-logger:
-  default: info
-  logs:
-    custom_components.drivvo: debug
-```
+![logo.png](logo.png)
 
 [buymecoffee]: https://www.buymeacoffee.com/hudsonbrendon
 [buymecoffeebedge]: https://camo.githubusercontent.com/cd005dca0ef55d7725912ec03a936d3a7c8de5b5/68747470733a2f2f696d672e736869656c64732e696f2f62616467652f6275792532306d6525323061253230636f666665652d646f6e6174652d79656c6c6f772e737667
