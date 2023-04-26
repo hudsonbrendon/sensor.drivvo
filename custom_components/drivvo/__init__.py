@@ -154,4 +154,4 @@ async def get_data_vehicle(hass, user, password, id_vehicle, info):
             return data
 
     _LOGGER.debug("API Response Data Vehicle - %s: %s", info, response)
-    return False
+    return None

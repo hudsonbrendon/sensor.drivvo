@@ -75,6 +75,18 @@ async def async_setup_entry(
                 ],
                 update_before_add=True,
             )
+        else:
+            async_create_issue(
+                hass,
+                DOMAIN,
+                f"{vehicle}_vehicle_non_existent",
+                is_fixable=False,
+                severity=IssueSeverity.WARNING,
+                translation_key="vehicle_non_existent",
+                translation_placeholders={
+                    "vehicle": vehicle,
+                },
+            )
 
 
 async def async_setup_platform(
