@@ -9,7 +9,11 @@ from homeassistant.core import callback
 from homeassistant.data_entry_flow import FlowResult
 import homeassistant.helpers.config_validation as cv
 from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.issue_registry import IssueSeverity, async_create_issue
+from homeassistant.helpers.issue_registry import (
+    IssueSeverity,
+    async_create_issue,
+    async_delete_issue,
+)
 
 from . import auth, get_vehicles
 from .const import (
@@ -62,6 +66,11 @@ class DrivvoOptionsFlowHandler(config_entries.OptionsFlow):
                         dev_reg.async_update_device(
                             device_id=device.id,
                             remove_config_entry_id=self.config_entry.entry_id,
+                        )
+                        async_delete_issue(
+                            self.hass,
+                            DOMAIN,
+                            f"{vehicle}_vehicle_non_existent",
                         )
                         _LOGGER.debug("Device %s (%s) removed", device.name, device.id)
 

@@ -37,6 +37,10 @@
     "import_already_configured": {
       "title": "Account {email} already exists",
       "description": "Account {email} already exists and therefore was not imported.\n\nYou can remove the configuration from your `configuration.yaml` file."
+    },
+    "vehicle_non_existent": {
+      "title": "The vehicle ID {vehicle} does not exist in the Drivvo app",
+      "description": "The vehicle ID {vehicle} does not exist, it may have been deleted.\n\nGo to the integration configuration options and remove the vehicle."
     }
   },
   "options": {
