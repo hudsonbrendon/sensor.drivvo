@@ -29,6 +29,67 @@
       "reauth_successful": "Reautenticação realizada com sucesso."
     }
   },
+  "entity": {
+    "sensor": {
+      "refuellings": {
+        "name": "Abastecimentos",
+        "state_attributes": {
+          "veiculo": {
+            "name": "Veículo"
+          },
+          "odometro":  {
+            "name": "Último odômetro"
+          },
+          "data_odometro":  {
+            "name": "Data do último odômetro"
+          },
+          "ultima_media":  {
+            "name": "Última média de combustível"
+          },
+          "media_geral":  {
+            "name": "Média geral de combustível"
+          },
+          "posto":  {
+            "name": "Posto de combustível"
+          },
+          "tipo_de_combustivel":  {
+            "name": "Tipo de Combustível"
+          },
+          "motivo_do_abastecimento":  {
+            "name": "Motivo do reabastecimento"
+          },
+          "data_do_abastecimento":  {
+            "name": "Data do reabastecimento"
+          },
+          "valor_total_pago":  {
+            "name": "Valor do reabastecimento"
+          },
+          "preco_do_combustivel":  {
+            "name": "Preço do combustível"
+          },
+          "soma_total_de_abastecimentos":  {
+            "name": "Total de abastecimentos"
+          },
+          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
+            "name": "Valor total dos abastecimentos"
+          },
+          "encheu_o_tanque":  {
+            "name": "Encheu o tanque",
+            "state": {
+              "false": "Não",
+              "true": "Sim"
+            }
+          },
+          "km_percorridos_desde_o_ultimo_abastecimento":  {
+            "name": "Distância percorrida desde o último abastecimento"
+          },
+          "gasolina_mais_barata_ate_entao":  {
+            "name": "Combustível mais barato"
+          }
+        }
+      }
+    }
+  },
   "issues": {
     "yaml_deprecated": {
       "title": "A configuração YAML para o Drivvo está depreciada",
