@@ -29,6 +29,67 @@
       "reauth_successful": "Reauthentication successful."
     }
   },
+  "entity": {
+    "sensor": {
+      "refuellings": {
+        "name": "Refuellings",
+        "state_attributes": {
+          "veiculo": {
+            "name": "Vehicle"
+          },
+          "odometro":  {
+            "name": "Last odometer"
+          },
+          "data_odometro":  {
+            "name": "Date of last odometer"
+          },
+          "ultima_media":  {
+            "name": "Last fuel average"
+          },
+          "media_geral":  {
+            "name": "General fuel average"
+          },
+          "posto":  {
+            "name": "Fuel station"
+          },
+          "tipo_de_combustivel":  {
+            "name": "Type of fuel"
+          },
+          "motivo_do_abastecimento":  {
+            "name": "Refuelling reason"
+          },
+          "data_do_abastecimento":  {
+            "name": "Date refuelling"
+          },
+          "valor_total_pago":  {
+            "name": "Value refuelling"
+          },
+          "preco_do_combustivel":  {
+            "name": "Fuel price"
+          },
+          "soma_total_de_abastecimentos":  {
+            "name": "Total refuellings"
+          },
+          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
+            "name": "Total value refuellings"
+          },
+          "encheu_o_tanque":  {
+            "name": "Tank full",
+            "state": {
+              "false": "No",
+              "true": "Yes"
+            }
+          },
+          "km_percorridos_desde_o_ultimo_abastecimento":  {
+            "name": "Distance traveled since the last refueling"
+          },
+          "gasolina_mais_barata_ate_entao":  {
+            "name": "Cheaper fuel"
+          }
+        }
+      }
+    }
+  },
   "issues": {
     "yaml_deprecated": {
       "title": "Configuration of the Drivvo in YAML is deprecated",
