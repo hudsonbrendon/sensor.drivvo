@@ -150,52 +150,88 @@ class DrivvoSensor(Entity):
     @property
     def supply(self):
         """Abastecimento."""
-        return self._supplies[0]
+        if len(self._supplies) > 0:
+            return self._supplies[0]
+        return None
 
     @property
     def total_payment(self):
         """Soma total de valores pagos em todos os abastecimentos."""
-        total = 0
-        for supply in self._supplies:
-            total += supply["valor_total"]
-        return total
+        if len(self._supplies) > 0:
+            total = 0
+            for supply in self._supplies:
+                total += supply["valor_total"]
+            return total
+        return None
 
     @property
     def km_travel(self):
         """Km percorridos desde o ultimo abastecimento."""
-        km = 0
-        odometers = [supply["odometro"] for supply in self._supplies]
-        if len(odometers) > 1:
-            km = odometers[0] - odometers[1]
-        return km
+        if len(self._supplies) > 0:
+            km = 0
+            odometers = [supply["odometro"] for supply in self._supplies]
+            if len(odometers) > 1:
+                km = odometers[0] - odometers[1]
+            return km
+        return None
 
     @property
     def cheapest_gasoline_until_today(self):
         """Gasolina mais barata até hoje."""
-        return min([supply["preco"] for supply in self._supplies])
+        if len(self._supplies) > 0:
+            return min([supply["preco"] for supply in self._supplies])
+        return None
 
     @property
     def total_amount_of_supplies(self):
         """Número total de abastetimentos."""
-        return len(self._supplies)
+        if len(self._supplies) > 0:
+            return len(self._supplies)
+        return 0
 
     @property
     def extra_state_attributes(self):
         """Atributos."""
+
+        veiculo = self._model
+        soma_total_de_abastecimentos = self.total_amount_of_supplies
+        soma_total_de_valores_pagos_em_todos_os_abastecimentos = self.total_payment
+        km_percorridos_desde_o_ultimo_abastecimento = self.km_travel
+        gasolina_mais_barata_ate_entao = self.cheapest_gasoline_until_today
+        odometro = None
+        tipo_de_combustivel = None
+        motivo_do_abastecimento = None
+        data_do_abastecimento = None
+        valor_total_pago = None
+        preco_do_combustivel = None
+        encheu_o_tanque = None
+        posto = None
+        if self.supply is not None:
+            odometro = self.supply["odometro"]
+            tipo_de_combustivel = self.supply.get("combustivel")
+            motivo_do_abastecimento = self.supply.get("tipo_motivo")
+            data_do_abastecimento = self.supply.get("data")
+            valor_total_pago = self.supply["valor_total"]
+            preco_do_combustivel = self.supply["preco"]
+            encheu_o_tanque = "Sim" if self.supply.get("tanque_cheio") else "Não"
+            posto_combustivel = self.supply["posto_combustivel"]
+            if (posto_combustivel is not None) and ("nome" in posto_combustivel):
+                posto = posto_combustivel["nome"]
+
         return {
-            "veiculo": self._model,
-            "odometro": self.supply["odometro"],
-            "posto": self.supply["posto_combustivel"]["nome"],
-            "tipo_de_combustivel": self.supply.get("combustivel"),
-            "motivo_do_abastecimento": self.supply.get("tipo_motivo"),
-            "data_do_abastecimento": self.supply.get("data"),
-            "valor_total_pago": self.supply["valor_total"],
-            "preco_do_combustivel": self.supply["preco"],
-            "soma_total_de_abastecimentos": self.total_amount_of_supplies,
-            "soma_total_de_valores_pagos_em_todos_os_abastecimentos": self.total_payment,
-            "encheu_o_tanque": "Sim" if self.supply.get("tanque_cheio") else "Não",
-            "km_percorridos_desde_o_ultimo_abastecimento": self.km_travel,
-            "gasolina_mais_barata_ate_entao": self.cheapest_gasoline_until_today,
+            "veiculo": veiculo,
+            "odometro": odometro,
+            "posto": posto,
+            "tipo_de_combustivel": tipo_de_combustivel,
+            "motivo_do_abastecimento": motivo_do_abastecimento,
+            "data_do_abastecimento": data_do_abastecimento,
+            "valor_total_pago": valor_total_pago,
+            "preco_do_combustivel": preco_do_combustivel,
+            "soma_total_de_abastecimentos": soma_total_de_abastecimentos,
+            "soma_total_de_valores_pagos_em_todos_os_abastecimentos": soma_total_de_valores_pagos_em_todos_os_abastecimentos,
+            "encheu_o_tanque": encheu_o_tanque,
+            "km_percorridos_desde_o_ultimo_abastecimento": km_percorridos_desde_o_ultimo_abastecimento,
+            "gasolina_mais_barata_ate_entao": gasolina_mais_barata_ate_entao,
         }
 
     async def async_update(self):

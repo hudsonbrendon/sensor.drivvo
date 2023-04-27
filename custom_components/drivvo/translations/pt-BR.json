@@ -9,7 +9,7 @@
         }
       },
       "vehicle": {
-        "description": "Selecione os veículos que deseja adicionar na integraçao:",
+        "description": "Selecione os veículos que deseja adicionar na integração:",
         "data": {
           "vehicles": "Veículos"
         }

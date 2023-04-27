@@ -2,7 +2,7 @@
   "domain": "drivvo",
   "name": "Drivvo",
   "codeowners": [
-    "@hudsonbrendon"
+    "@hudsonbrendon", "@dougiteixeira"
   ],
   "config_flow": true,
   "dependencies": [],
