@@ -272,16 +272,16 @@ async def get_data_vehicle(hass, user, password, id_vehicle):
                         odometer_init = odometer["odometro"]
 
                     if odometer_init is not None:
-                        if odometer["volume"] != 0:
-                            volume = odometer["volume"]
-                        else:
-                            volume = odometer["valor_total"] / odometer["preco"]
-
                         if (odometer["tanque_cheio"]) and (
                             odometer["odometro"] != odometer_init
                         ):
                             odometer_old = odometer["odometro"]
                             break
+
+                        if odometer["volume"] != 0:
+                            volume += odometer["volume"]
+                        else:
+                            volume += odometer["valor_total"] / odometer["preco"]
 
                 if volume > 0 and odometer_old is not None:
                     refuelling_last_average = (
