@@ -85,6 +85,12 @@
           },
           "gasolina_mais_barata_ate_entao":  {
             "name": "Cheaper fuel"
+          },
+          "refuelling_volume":  {
+            "name": "Last refueling volume"
+          },
+          "refuelling_volume_total":  {
+            "name": "Total volume refuelings"
           }
         }
       }

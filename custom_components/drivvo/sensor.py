@@ -164,6 +164,8 @@ class DrivvoSensor(Entity):
             "encheu_o_tanque": self.data.refuelling_tank_full,
             "km_percorridos_desde_o_ultimo_abastecimento": self.data.refuelling_distance,
             "gasolina_mais_barata_ate_entao": self.data.refuelling_price_lowest,
+            "refuelling_volume": self.data.refuelling_volume,
+            "refuelling_volume_total": self.data.refuelling_volume_total,
         }
 
     async def async_update(self):

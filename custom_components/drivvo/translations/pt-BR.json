@@ -85,6 +85,12 @@
           },
           "gasolina_mais_barata_ate_entao":  {
             "name": "Combustível mais barato"
+          },
+          "refuelling_volume":  {
+            "name": "Volume do último abastecimento"
+          },
+          "refuelling_volume_total":  {
+            "name": "Volume total dos abastecimentos"
           }
         }
       }
