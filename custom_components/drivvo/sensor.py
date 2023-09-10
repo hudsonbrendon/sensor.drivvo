@@ -129,7 +129,7 @@ class DrivvoSensor(Entity):
             name=data.identification,
             manufacturer="Drivvo",
             model=self._model,
-            sw_version="1.0.8",
+            sw_version="1.0.9",
         )
         self.data = data
 
@@ -140,12 +140,12 @@ class DrivvoSensor(Entity):
 
     @property
     def state(self):
-        """Retorna o número de abastecimentos até então."""
+        """Returns the number of supplies so far."""
         return self.data.refuelling_total
 
     @property
     def extra_state_attributes(self):
-        """Atributos."""
+        """Attributes."""
 
         return {
             "veiculo": self._model,
@@ -169,7 +169,7 @@ class DrivvoSensor(Entity):
         }
 
     async def async_update(self):
-        """Atualiza os dados fazendo requisição na API."""
+        """Updates the data by making a request to the API."""
         self.data = await get_data_vehicle(
             hass=self.hass,
             user=self._email,
