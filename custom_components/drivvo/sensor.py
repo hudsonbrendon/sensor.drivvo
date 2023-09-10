@@ -126,10 +126,10 @@ class DrivvoSensor(Entity):
         self._attr_device_info = DeviceInfo(
             entry_type=dr.DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, data.id)},
-            default_manufacturer="Drivvo",
             name=data.identification,
-            default_model=self._model,
-            configuration_url="https://web.drivvo.com/",
+            manufacturer="Drivvo",
+            model=self._model,
+            sw_version="1.0.8",
         )
         self.data = data
 
