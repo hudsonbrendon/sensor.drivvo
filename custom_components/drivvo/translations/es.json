@@ -1,0 +1,131 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "description": "Introduzca las credenciales de tu cuenta:",
+        "data": {
+          "email": "E-mail",
+          "password": "Contraseña"
+        }
+      },
+      "vehicle": {
+        "description": "Seleccione los vehículos que quiere añadir a la integración:",
+        "data": {
+          "vehicles": "Vehículos"
+        }
+      },
+      "reauth_confirm": {
+        "data": {
+          "email": "E-mail",
+          "password": "Contraseña"
+        }
+      }
+    },
+    "error": {
+      "auth_error": "Autenticación incorrecta"
+    },
+    "abort": {
+      "already_configured": "Esta cuenta ya ha sido configurada.",
+      "reauth_successful": "Reautenticación existosa."
+    }
+  },
+  "entity": {
+    "sensor": {
+      "refuellings": {
+        "name": "Repostajes",
+        "state_attributes": {
+          "veiculo": {
+            "name": "Vehículo"
+          },
+          "odometro":  {
+            "name": "Último cuentakilómetros"
+          },
+          "data_odometro":  {
+            "name": "Fecha del último cuentakilómetros"
+          },
+          "ultima_media":  {
+            "name": "Última media de combustible"
+          },
+          "media_geral":  {
+            "name": "Media general de combustible"
+          },
+          "posto":  {
+            "name": "Estación de servicio"
+          },
+          "tipo_de_combustivel":  {
+            "name": "Tipo de combustible"
+          },
+          "motivo_do_abastecimento":  {
+            "name": "Razón de repostaje"
+          },
+          "data_do_abastecimento":  {
+            "name": "Fecha de repostaje"
+          },
+          "valor_total_pago":  {
+            "name": "Costo del repostaje"
+          },
+          "preco_do_combustivel":  {
+            "name": "Precio del combustible"
+          },
+          "soma_total_de_abastecimentos":  {
+            "name": "Total de repostajes"
+          },
+          "soma_total_de_valores_pagos_em_todos_os_abastecimentos":  {
+            "name": "Costo total de repostajes"
+          },
+          "encheu_o_tanque":  {
+            "name": "Tanque lleno",
+            "state": {
+              "false": "No",
+              "true": "Si"
+            }
+          },
+          "km_percorridos_desde_o_ultimo_abastecimento":  {
+            "name": "Distancia recorrida desde el último repostaje"
+          },
+          "gasolina_mais_barata_ate_entao":  {
+            "name": "Precio de combustible más barato"
+          },
+          "refuelling_volume":  {
+            "name": "Volumen del último repostaje"
+          },
+          "refuelling_volume_total":  {
+            "name": "Volumen del total de repostajes"
+          }
+        }
+      }
+    }
+  },
+  "issues": {
+    "yaml_deprecated": {
+      "title": "Configuración YAML de Drivvo está obsoleta",
+      "description": "La configuración de Drivvo a través de YAML está obsoleta.\n\nSu configuración ha sido importada a la interfaz de usuario (UI) y puede eliminarse del archivo `configuration.yaml` y hacer un reinicio de Home Assistant."
+    },
+    "import_already_configured": {
+      "title": "La cuenta {email} ya existe",
+      "description": "La cuenta {email} ya existe y por tanto no ha sido importada.\n\nPuede eliminar la configuración del archivo `configuration.yaml`."
+    },
+    "vehicle_non_existent": {
+      "title": "El vehículo con ID {vehicle} no exixte en la aplicación de Drivvo",
+      "description": "El vehículo con ID {vehicle} no exixte en la aplicación de Drivvo, puede haber sido borrado.\n\nVaya a las opciones de configuración de la integración y elimine el vehículo."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "email": "E-mail",
+          "password": "Contraseña",
+          "vehicles": "Vehículos",
+          "no_vehicles": "No existen vehículos activos en esta cuenta."
+        }
+      }
+    },
+    "abort":{
+      "changes_successful": "Cambios correctamente guardados."
+    },
+    "error": {
+      "auth_error": "Autenticación incorrecta"
+    }
+  }
+}
