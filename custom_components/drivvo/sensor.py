@@ -129,7 +129,7 @@ class DrivvoSensor(Entity):
             name=data.identification,
             manufacturer="Drivvo",
             model=self._model,
-            sw_version="1.1.0",
+            sw_version="1.1.1",
         )
         self.data = data
 
