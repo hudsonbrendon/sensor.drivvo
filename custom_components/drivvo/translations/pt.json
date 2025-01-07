@@ -1,0 +1,132 @@
+{
+    "config": {
+      "step": {
+        "user": {
+          "description": "Introduza os dados da sua conta:",
+          "data": {
+            "email": "E-mail",
+            "password": "Palavra-passe"
+          }
+        },
+        "vehicle": {
+          "description": "Seleccione os veículos que pretende adicionar à integração:",
+          "data": {
+            "vehicles": "Veículos"
+          }
+        },
+        "reauth_confirm": {
+          "data": {
+            "email": "E-mail",
+            "password": "Palavra-passe"
+          }
+        }
+      },
+      "error": {
+        "auth_error": "Autenticação inválida"
+      },
+      "abort": {
+        "already_configured": "Esta conta já se encontra configurada.",
+        "reauth_successful": "Reautenticação efectuada com sucesso."
+      }
+    },
+    "entity": {
+      "sensor": {
+        "refuellings": {
+          "name": "Abastecimentos",
+          "state_attributes": {
+            "veiculo": {
+              "name": "Veículo"
+            },
+            "odometro": {
+              "name": "Último odómetro"
+            },
+            "data_odometro": {
+              "name": "Data do último odómetro"
+            },
+            "ultima_media": {
+              "name": "Última média de combustível"
+            },
+            "media_geral": {
+              "name": "Média geral de combustível"
+            },
+            "posto": {
+              "name": "Posto de combustível"
+            },
+            "tipo_de_combustivel": {
+              "name": "Tipo de combustível"
+            },
+            "motivo_do_abastecimento": {
+              "name": "Motivo do reabastecimento"
+            },
+            "data_do_abastecimento": {
+              "name": "Data do abastecimento"
+            },
+            "valor_total_pago": {
+              "name": "Valor do abastecimento"
+            },
+            "preco_do_combustivel": {
+              "name": "Preço do combustível"
+            },
+            "soma_total_de_abastecimentos": {
+              "name": "Total de abastecimentos"
+            },
+            "soma_total_de_valores_pagos_em_todos_os_abastecimentos": {
+              "name": "Valor total dos abastecimentos"
+            },
+            "encheu_o_tanque": {
+              "name": "Encheu o depósito",
+              "state": {
+                "false": "Não",
+                "true": "Sim"
+              }
+            },
+            "km_percorridos_desde_o_ultimo_abastecimento": {
+              "name": "Distância percorrida desde o último abastecimento"
+            },
+            "gasolina_mais_barata_ate_entao": {
+              "name": "Combustível mais barato até ao momento"
+            },
+            "refuelling_volume": {
+              "name": "Volume do último abastecimento"
+            },
+            "refuelling_volume_total": {
+              "name": "Volume total dos abastecimentos"
+            }
+          }
+        }
+      }
+    },
+    "issues": {
+      "yaml_deprecated": {
+        "title": "A configuração YAML para o Drivvo está obsoleta",
+        "description": "A configuração YAML para o Drivvo está obsoleta.\n\nA sua configuração foi importada para a IU e pode ser removida do ficheiro `configuration.yaml`."
+      },
+      "import_already_configured": {
+        "title": "A configuração da conta {email} já existe",
+        "description": "A configuração da conta {email} já existe, por isso não foi importada.\n\nPode remover a configuração do seu ficheiro `configuration.yaml`."
+      },
+      "vehicle_non_existent": {
+        "title": "O veículo ID {vehicle} não existe na aplicação Drivvo",
+        "description": "O veículo {vehicle} não existe, pode ter sido removido.\n\nAceda às opções de configuração da integração e remova o veículo."
+      }
+    },
+    "options": {
+      "step": {
+        "init": {
+          "data": {
+            "email": "E-mail",
+            "password": "Palavra-passe",
+            "vehicles": "Veículos",
+            "no_vehicles": "Não existem veículos ativos para esta conta."
+          }
+        }
+      },
+      "abort": {
+        "changes_successful": "Alterações guardadas com sucesso."
+      },
+      "error": {
+        "auth_error": "Autenticação inválida"
+      }
+    }
+  }
+  
