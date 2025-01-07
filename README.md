@@ -1,5 +1,8 @@
 ![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
+[![hassfest](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hassfest.yaml)
+[![HACS Action](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hacs.yaml/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hacs.yaml)
+[![Dependabot Updates](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/dependabot/dependabot-updates)
 
 # Drivvo Custom Integration Home Assistant
 
