@@ -1,6 +1,6 @@
 from collections.abc import Mapping
 import logging
-from typing import Any
+from typing import Any, Dict
 
 import voluptuous as vol
 
@@ -152,7 +152,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self.user: str
         self.password: str
 
-    async def async_step_import(self, import_config: dict[str, Any]) -> FlowResult:
+    async def async_step_import(self, import_config: Dict[str, Any]) -> FlowResult:
         """Import existing configuration."""
 
         if (f"{DOMAIN}_{import_config.get(CONF_EMAIL)}").lower() in [
@@ -183,7 +183,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             },
         )
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(self, user_input=None) -> FlowResult:
         errors = {}
 
         if user_input is not None:
@@ -218,7 +218,7 @@ class DrivvoConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_vehicle(
         self,
         user_input=None,
-    ):
+    ) -> FlowResult:
         errors = {}
 
         if user_input is not None:

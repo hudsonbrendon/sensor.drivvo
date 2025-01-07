@@ -1,5 +1,5 @@
 import logging
-from typing import Any
+from typing import Any, Dict
 
 import voluptuous as vol
 
@@ -111,7 +111,7 @@ async def async_setup_platform(
 
 
 class DrivvoSensor(Entity):
-    def __init__(self, hass, email, password, data, interval):
+    def __init__(self, hass, email, password, data, interval) -> None:
         """Inizialize sensor."""
         self._attr_unique_id = f"{data.id}_refuellings"
         self._attr_has_entity_name = True
@@ -134,17 +134,17 @@ class DrivvoSensor(Entity):
         self.data = data
 
     @property
-    def icon(self):
+    def icon(self) -> str:
         """Return the default icon."""
         return ICON
 
     @property
-    def state(self):
+    def state(self) -> int:
         """Returns the number of supplies so far."""
         return self.data.refuelling_total
 
     @property
-    def extra_state_attributes(self):
+    def extra_state_attributes(self) -> Dict[str, Any]:
         """Attributes."""
 
         return {
@@ -168,7 +168,7 @@ class DrivvoSensor(Entity):
             "refuelling_volume_total": self.data.refuelling_volume_total,
         }
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Updates the data by making a request to the API."""
         self.data = await get_data_vehicle(
             hass=self.hass,
