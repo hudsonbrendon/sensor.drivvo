@@ -6,7 +6,23 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN python -m pip install --upgrade homeassistant colorlog black pylint numpy hassil av go2rtc-client zeroconf async-upnp-client pyserial aiodhcpwatcher PyTurboJPEG homeassistant-frontend aiodiscover ha-ffmpeg home-assistant-intents mutagen
+RUN python -m pip install --upgrade \
+    homeassistant \
+    colorlog \
+    ruff \
+    numpy \
+    hassil \
+    av \
+    go2rtc-client \
+    zeroconf \
+    async-upnp-client \
+    pyserial \
+    aiodhcpwatcher \
+    PyTurboJPEG \
+    aiodiscover \
+    ha-ffmpeg \
+    home-assistant-intents \
+    mutagen
 
 RUN cd && mkdir -p /config/custom_components
 
