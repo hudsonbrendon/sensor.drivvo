@@ -1,8 +1,8 @@
 ![hacs_badge](https://img.shields.io/badge/hacs-custom-orange.svg)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
-[![hassfest](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hassfest.yaml)
-[![HACS Action](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hacs.yaml/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/hacs.yaml)
-[![Dependabot Updates](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/hudsonbrendon/sensor.drivvo/actions/workflows/dependabot/dependabot-updates)
+[![hassfest](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hassfest.yaml/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hassfest.yaml)
+[![HACS Action](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hacs.yaml/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/hacs.yaml)
+[![Dependabot Updates](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/hudsonbrendon/HA-drivvo/actions/workflows/dependabot/dependabot-updates)
 
 # Drivvo Custom Integration Home Assistant
 
@@ -18,16 +18,16 @@ Have HACS installed, this will allow you to update easily.
 
 Adding Drivvo to HACS can be using this button:
 
-[![image](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hudsonbrendon&repository=sensor.drivvo&category=integration)
+[![image](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=hudsonbrendon&repository=HA-drivvo&category=integration)
 
-If the button above doesn't work, add `https://github.com/hudsonbrendon/sensor.drivvo` as a custom repository of type Integration in HACS.
+If the button above doesn't work, add `https://github.com/hudsonbrendon/HA-drivvo` as a custom repository of type Integration in HACS.
 
 - Click Install on the `Drivvo` integration.
 - Restart the Home Assistant.
 
 ### Manual installation
 
-- Copy `drivvo`  folder from [latest release](https://github.com/hudsonbrendon/sensor.drivvo/releases/latest) to your `<config dir>/custom_components/` directory.
+- Copy `drivvo`  folder from [latest release](https://github.com/hudsonbrendon/HA-drivvo/releases/latest) to your `<config dir>/custom_components/` directory.
 - Restart the Home Assistant.
 
 ## Configuration
